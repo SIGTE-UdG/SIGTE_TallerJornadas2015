@@ -1,0 +1,1 @@
+Search.setIndex({envversion:42,terms:{index:0,search:0,python:0,modul:0,content:0,grass:0,page:0},objtypes:{},objnames:{},filenames:["index"],titles:["Welcome to taller SIGTE&#8217;s documentation!"],objects:{},titleterms:{taller:0,welcom:0,indic:0,sigt:0,tabl:0,document:0,teledeteccio:0,cur:0}})
