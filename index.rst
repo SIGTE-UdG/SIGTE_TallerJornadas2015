@@ -27,3 +27,5 @@ TALLER TELEDETECCIO
 ==================
 
 GRASS, PYTHON...
+alex, pep
+divendres 
