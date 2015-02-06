@@ -29,3 +29,9 @@ TALLER TELEDETECCIO
 GRASS, PYTHON...
 alex, pep
 divendres 
+
+Trabajar con detección de cambios
+=================================
+Deteccion incendios
+
+Cambios usos del suelo
