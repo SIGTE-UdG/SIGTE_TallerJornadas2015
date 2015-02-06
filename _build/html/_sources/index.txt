@@ -28,10 +28,26 @@ TALLER TELEDETECCIO
 
 GRASS, PYTHON...
 alex, pep
-divendres 
+divendres
 
-Trabajar con detección de cambios
-=================================
-Deteccion incendios
+Índice del taller
+=================
+1. Breve introducción a la teledetección
+2. ¿Qué módulos nos ofrece GRASS Gis para trabajar con imágenes de satélite?
+3. Correcciones atmosféricas de imagenes de satélite
+4. Calculo de temperaturas a partir de imagenes de satélite
+5. Scripts de python sobre GRASS Gis aplicados a la teledetección
+ 
+
+¿Qué es la teledetección?
+==========================
+El término teledetección hace referencia a las distintas formas de adquirir información de forma remota a través
+de sensores sin entrar en contacto físico con el objeto. Los sensores se localizan en plataformas de observación (bien en aviones o satélites), y registran la información centrada en las regiones del espectro electromagnético. La teledetección tiene como objetivo
+obtener las características de la superficie observada y los fenómenos que en ella tienen lugar. Distintas disciplinas se sirven de
+esta fuente de información (meteorología, oceanografía, geología, geografía,...), por lo que esta nueva forma de ver nuestro planeta viene acompañada por el desarrollo de potentes modelos físico-matemáticos que tratan de describir los procesos físicos que tienen lugar en nuestro entorno.
+
+.. figure:: img/tele1.jpeg
+   :align:  center
+   :width: 450pt
 
 Cambios usos del suelo
