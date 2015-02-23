@@ -3,25 +3,7 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-Welcome to taller SIGTE's documentation!
-========================================
 
-Contents:
-
-.. toctree::
-   :maxdepth: 2
-
-
-
-Indices and tables
-==================
-
-* :ref:`genindex`
-* :ref:`modindex`
-* :ref:`search`
-
-CURS SIGTE
-==================
 
 TALLER TELEDETECCIO
 ==================
@@ -50,4 +32,130 @@ esta fuente de información (meteorología, oceanografía, geología, geografía
    :align:  center
    :width: 450pt
 
-Cambios usos del suelo
+
+
+El programa Landsat
+====================
+Vamos a desarrollar el taller utilizando imagenes del satélite **Landsat**. 
+
+Desde que a finales de la década de los 60 la agencia espacial norteamericana diseñó el primer proyecto dedicado exclusivamente a la observación de los recursos terrestres, la família Landsat ha constituido el proyecto más fructífero de teledetección espacial desarrollado hasta el momento. 
+
+La buena resolución de sus sensores, el carácter global y periódico de la observación que realizan y la buena comercialización, explican su profuso empleo por experts de muy variados campos en todo el mundo. 
+
+Con el **Landsat 8** (cuyo nombre técnico es LCDM 'Landsat Data Continuity Mission') se ha dado continuidad al programa más largo de la historia sobre información del planteta. 
+
+
+El sensor OLI (Operational Land Imager)
+_______________________________________
+
+A bordo del Landsat 8, se encuentra el sensor OLI, puesto en órbita en Febrero del 2013. Las bandas espectrales capturadas por este sensor son muy parecidas a las del sensor ETM+ (a bordo del Landsat 7), aunqué se han añadido dos de nuevas: un nuevo **canal en azul visible** (banda 1) disseñado especificamente para observar la calidad del agua en lagos someros y zonas costeras, así como para detectar aerosoles, y otro **canal en el infrarrojo** (banda 9) para determinar la presencia de nubes -fundamentalmente cirrus-. 
+
+Asimismo, junto a acada escena del Landsat 8 se incluye también una banda de valoración de calidad (*Quality Assurance band*), que ofrece información respecto anomalías en la toma de datos por problemas en el instrumental o la presencia de elementos como nubes, agua y nieve. 
+
+El sensor TIRS (Thermal Infrarred Sensor)
+_________________________________________
+
+El sensor TIRS capta información acerca la temperatura de la superficie terrestre a través de dos bandas del infrarroje térmico (banda 10 y banda 11). Permite distinguir entre la temperatura de la superficie terrestre y la temperatura atmosfércia. Tienen una resolución de 100 mts. 
+
+
+Cálculo de la temperatura terrestre (LST) utilizando las bandas del TIRS
+=========================================================================
+
+
+
+Split-window algorithm 
+_______________________
+
+Para el cálculo de la temperatura de la superfície, se utilizará el algoritmo Split-Window (SW). Se trata del algoritmo maś utilizado para el cálculo de LST debido a su simplicidad y robustez. 
+
+Este algoritmo se basa en el hecho que la radiación absorvida por la atmósfera es proporcional a la diferencia de brillo entre las mediciones simultáneas en dos lonigudes de onda diferentes, correspondientes a las dos bandas del sensor TIRS. 
+
+
+LST = TB\ :sub:`10`\ + C\ :sub:`1`\ (TB\ :sub:`10`\-TB\ :sub:`11`\ ) + C\ :sub:`2`\ (TB\ :sub:`10`\ -TB\ :sub:`11`\ )2+ C\ :sub:`0`\ +(C\ :sub:`3`\ +C\ :sub:`4`\ W) (1-ε) + (C\ :sub:`5`\ +C\ :sub:`6`\ W) ∆ ε
+
+
+
+donde:
+
+LST - Land Surface Temperature (Kelvin)
+
+C\ :sub:`0`\  to  C\ :sub:`6`\ - Valores del coeficiente para SW (Skokovic et al, 2014; Sobrino et al, 1996; Shaouhua Zhao et al, 2009)
+
++------------+------+
+| Constant   |Value |    
++============+======+
+|C\ :sub:`0` |-0.268|
++------------+------+
+|C\ :sub:`1` |1.378 |
++------------+------+
+|C\ :sub:`2` |0.183 |
++------------+------+
+|C\ :sub:`3` |54.300|
++------------+------+
+|C\ :sub:`4` |-2.238|
++------------+------+
+|C\ :sub:`5` |-129.2|
++------------+------+
+|C\ :sub:`6` |16.400|
++------------+------+
+
+
+
+
+TB\ :sub:`10`\ y TB\ :sub:`11`\ - temperatura de brillo de la banda 10 y 11 (K)
+
+∆ - valor medio LSE (Land Surface Emissivity) de las bandas del TIR
+
+W - contenido de vapor de agua en el atmósfera
+
+∆ ε - Diferencia en LSE
+
+
+
+Convertir los ND a valores de radiancia (TOA - Top of athmosphere)
+___________________________________________________________________
+ 
+A partir de los datos medidos por el sensor, puede obtenerse la **energía reflejada**, ya que la radiancia espectral medida por éste es consecuencia de la reflexión de la radiación electromagnética en las cubiertas. Esta reflexión se codifica con un valor numérico, que se denomina **ND**, de acuerdo a los coeficientes de calibración específicos para cada sensor. Dada que estos coeficientes son conocidos, puede realizarse el proceso inverso, obteniendo así los valores de **radiancia** espectral detectado por el sensor a partir de los ND. 
+
+
+Para aplicar la fórmula del SW *algorithm*, es imprescindible conocer estos valores de radiancia. 
+Las bandas del sensor OLI y TIRS pueden convertirse a valores de radiancia espectral del siguiente modo: 
+
+Lλ = MLQcal + AL 
+
+donde:              
+
+Lλ = TOA spectral radiance (Watts/( m2 * srad * μm))
+
+ML = Band-specific multiplicative rescaling factor from the metadata (RADIANCE_MULT_BAND_x, where x is the band number)
+    
+AL = Band-specific additive rescaling factor from the metadata (RADIANCE_ADD_BAND_x, where x is the band number)
+    
+Qcal = Quantized and calibrated standard product pixel values (DN)  
+
+
+Obtener la temperatura de Brillo a la altura de la atmósfera (TOA)
+__________________________________________________________________
+
+A partir de los valores de radiancia, utilizando las bandas térmicas fácilmente se puede derivar la temperatura a la altura del sensor. 
+Las bandas del TIRS se pueden convertir a temperatura de brillo utilizando las constantes que figuran en el archivo de metadatos. De este modo:
+
+.. figure:: img/tele2.png
+   :align:  center
+   :width: 100pt
+
+
+donde:              
+
+T = At-satellite brightness temperature (K)
+
+Lλ = TOA spectral radiance (Watts/( m2 * srad * μm))
+
+K1 = Band-specific thermal conversion constant from the metadata (K1_CONSTANT_BAND_x, where x is the band number, 10 or 11)
+
+K2 = Band-specific thermal conversion constant from the metadata (K2_CONSTANT_BAND_x, where x is the band number, 10 or 11)
+
+
+
+
+

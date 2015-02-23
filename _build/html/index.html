@@ -8,7 +8,7 @@
   <head>
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
     
-    <title>Welcome to taller SIGTE’s documentation! &mdash; taller SIGTE v1 documentation</title>
+    <title>TALLER TELEDETECCIO &mdash; taller SIGTE v1 documentation</title>
     
     <link rel="stylesheet" href="_static/default.css" type="text/css" />
     <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
@@ -43,26 +43,7 @@
         <div class="bodywrapper">
           <div class="body">
             
-  <div class="section" id="welcome-to-taller-sigte-s-documentation">
-<h1>Welcome to taller SIGTE&#8217;s documentation!<a class="headerlink" href="#welcome-to-taller-sigte-s-documentation" title="Permalink to this headline">¶</a></h1>
-<p>Contents:</p>
-<div class="toctree-wrapper compound">
-<ul class="simple">
-</ul>
-</div>
-</div>
-<div class="section" id="indices-and-tables">
-<h1>Indices and tables<a class="headerlink" href="#indices-and-tables" title="Permalink to this headline">¶</a></h1>
-<ul class="simple">
-<li><a class="reference internal" href="genindex.html"><em>Index</em></a></li>
-<li><a class="reference internal" href="py-modindex.html"><em>Module Index</em></a></li>
-<li><a class="reference internal" href="search.html"><em>Search Page</em></a></li>
-</ul>
-</div>
-<div class="section" id="curs-sigte">
-<h1>CURS SIGTE<a class="headerlink" href="#curs-sigte" title="Permalink to this headline">¶</a></h1>
-</div>
-<div class="section" id="taller-teledeteccio">
+  <div class="section" id="taller-teledeteccio">
 <h1>TALLER TELEDETECCIO<a class="headerlink" href="#taller-teledeteccio" title="Permalink to this headline">¶</a></h1>
 <p>GRASS, PYTHON...
 alex, pep
@@ -87,7 +68,97 @@ esta fuente de información (meteorología, oceanografía, geología, geografía
 <div class="figure align-center">
 <img alt="_images/tele1.jpeg" src="_images/tele1.jpeg" style="width: 450pt;" />
 </div>
-<p>Cambios usos del suelo</p>
+</div>
+<div class="section" id="el-programa-landsat">
+<h1>El programa Landsat<a class="headerlink" href="#el-programa-landsat" title="Permalink to this headline">¶</a></h1>
+<p>Vamos a desarrollar el taller utilizando imagenes del satélite <strong>Landsat</strong>.</p>
+<p>Desde que a finales de la década de los 60 la agencia espacial norteamericana diseñó el primer proyecto dedicado exclusivamente a la observación de los recursos terrestres, la família Landsat ha constituido el proyecto más fructífero de teledetección espacial desarrollado hasta el momento.</p>
+<p>La buena resolución de sus sensores, el carácter global y periódico de la observación que realizan y la buena comercialización, explican su profuso empleo por experts de muy variados campos en todo el mundo.</p>
+<p>Con el <strong>Landsat 8</strong> (cuyo nombre técnico es LCDM &#8216;Landsat Data Continuity Mission&#8217;) se ha dado continuidad al programa más largo de la historia sobre información del planteta.</p>
+<div class="section" id="el-sensor-oli-operational-land-imager">
+<h2>El sensor OLI (Operational Land Imager)<a class="headerlink" href="#el-sensor-oli-operational-land-imager" title="Permalink to this headline">¶</a></h2>
+<p>A bordo del Landsat 8, se encuentra el sensor OLI, puesto en órbita en Febrero del 2013. Las bandas espectrales capturadas por este sensor son muy parecidas a las del sensor ETM+ (a bordo del Landsat 7), aunqué se han añadido dos de nuevas: un nuevo <strong>canal en azul visible</strong> (banda 1) disseñado especificamente para observar la calidad del agua en lagos someros y zonas costeras, así como para detectar aerosoles, y otro <strong>canal en el infrarrojo</strong> (banda 9) para determinar la presencia de nubes -fundamentalmente cirrus-.</p>
+<p>Asimismo, junto a acada escena del Landsat 8 se incluye también una banda de valoración de calidad (<em>Quality Assurance band</em>), que ofrece información respecto anomalías en la toma de datos por problemas en el instrumental o la presencia de elementos como nubes, agua y nieve.</p>
+</div>
+<div class="section" id="el-sensor-tirs-thermal-infrarred-sensor">
+<h2>El sensor TIRS (Thermal Infrarred Sensor)<a class="headerlink" href="#el-sensor-tirs-thermal-infrarred-sensor" title="Permalink to this headline">¶</a></h2>
+<p>El sensor TIRS capta información acerca la temperatura de la superficie terrestre a través de dos bandas del infrarroje térmico (banda 10 y banda 11). Permite distinguir entre la temperatura de la superficie terrestre y la temperatura atmosfércia. Tienen una resolución de 100 mts.</p>
+</div>
+</div>
+<div class="section" id="calculo-de-la-temperatura-terrestre-lst-utilizando-las-bandas-del-tirs">
+<h1>Cálculo de la temperatura terrestre (LST) utilizando las bandas del TIRS<a class="headerlink" href="#calculo-de-la-temperatura-terrestre-lst-utilizando-las-bandas-del-tirs" title="Permalink to this headline">¶</a></h1>
+<div class="section" id="split-window-algorithm">
+<h2>Split-window algorithm<a class="headerlink" href="#split-window-algorithm" title="Permalink to this headline">¶</a></h2>
+<p>Para el cálculo de la temperatura de la superfície, se utilizará el algoritmo Split-Window (SW). Se trata del algoritmo maś utilizado para el cálculo de LST debido a su simplicidad y robustez.</p>
+<p>Este algoritmo se basa en el hecho que la radiación absorvida por la atmósfera es proporcional a la diferencia de brillo entre las mediciones simultáneas en dos lonigudes de onda diferentes, correspondientes a las dos bandas del sensor TIRS.</p>
+<p>LST = TB<sub>10</sub>+ C<sub>1</sub>(TB<sub>10</sub>-TB<sub>11</sub>) + C<sub>2</sub>(TB<sub>10</sub>-TB<sub>11</sub>)2+ C<sub>0</sub>+(C<sub>3</sub>+C<sub>4</sub>W) (1-ε) + (C<sub>5</sub>+C<sub>6</sub>W) ∆ ε</p>
+<p>donde:</p>
+<p>LST - Land Surface Temperature (Kelvin)</p>
+<p>C<sub>0</sub> to  C<sub>6</sub>- Valores del coeficiente para SW (Skokovic et al, 2014; Sobrino et al, 1996; Shaouhua Zhao et al, 2009)</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="67%" />
+<col width="33%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Constant</th>
+<th class="head">Value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>C<sub>0</sub></td>
+<td>-0.268</td>
+</tr>
+<tr class="row-odd"><td>C<sub>1</sub></td>
+<td>1.378</td>
+</tr>
+<tr class="row-even"><td>C<sub>2</sub></td>
+<td>0.183</td>
+</tr>
+<tr class="row-odd"><td>C<sub>3</sub></td>
+<td>54.300</td>
+</tr>
+<tr class="row-even"><td>C<sub>4</sub></td>
+<td>-2.238</td>
+</tr>
+<tr class="row-odd"><td>C<sub>5</sub></td>
+<td>-129.2</td>
+</tr>
+<tr class="row-even"><td>C<sub>6</sub></td>
+<td>16.400</td>
+</tr>
+</tbody>
+</table>
+<p>TB<sub>10</sub>y TB<sub>11</sub>- temperatura de brillo de la banda 10 y 11 (K)</p>
+<p>∆ - valor medio LSE (Land Surface Emissivity) de las bandas del TIR</p>
+<p>W - contenido de vapor de agua en el atmósfera</p>
+<p>∆ ε - Diferencia en LSE</p>
+</div>
+<div class="section" id="convertir-los-nd-a-valores-de-radiancia-toa-top-of-athmosphere">
+<h2>Convertir los ND a valores de radiancia (TOA - Top of athmosphere)<a class="headerlink" href="#convertir-los-nd-a-valores-de-radiancia-toa-top-of-athmosphere" title="Permalink to this headline">¶</a></h2>
+<p>A partir de los datos medidos por el sensor, puede obtenerse la <strong>energía reflejada</strong>, ya que la radiancia espectral medida por éste es consecuencia de la reflexión de la radiación electromagnética en las cubiertas. Esta reflexión se codifica con un valor numérico, que se denomina <strong>ND</strong>, de acuerdo a los coeficientes de calibración específicos para cada sensor. Dada que estos coeficientes son conocidos, puede realizarse el proceso inverso, obteniendo así los valores de <strong>radiancia</strong> espectral detectado por el sensor a partir de los ND.</p>
+<p>Para aplicar la fórmula del SW <em>algorithm</em>, es imprescindible conocer estos valores de radiancia.
+Las bandas del sensor OLI y TIRS pueden convertirse a valores de radiancia espectral del siguiente modo:</p>
+<p>Lλ = MLQcal + AL</p>
+<p>donde:</p>
+<p>Lλ = TOA spectral radiance (Watts/( m2 * srad * μm))</p>
+<p>ML = Band-specific multiplicative rescaling factor from the metadata (RADIANCE_MULT_BAND_x, where x is the band number)</p>
+<p>AL = Band-specific additive rescaling factor from the metadata (RADIANCE_ADD_BAND_x, where x is the band number)</p>
+<p>Qcal = Quantized and calibrated standard product pixel values (DN)</p>
+</div>
+<div class="section" id="obtener-la-temperatura-de-brillo-a-la-altura-de-la-atmosfera-toa">
+<h2>Obtener la temperatura de Brillo a la altura de la atmósfera (TOA)<a class="headerlink" href="#obtener-la-temperatura-de-brillo-a-la-altura-de-la-atmosfera-toa" title="Permalink to this headline">¶</a></h2>
+<p>A partir de los valores de radiancia, utilizando las bandas térmicas fácilmente se puede derivar la temperatura a la altura del sensor.
+Las bandas del TIRS se pueden convertir a temperatura de brillo utilizando las constantes que figuran en el archivo de metadatos. De este modo:</p>
+<div class="figure align-center">
+<img alt="_images/tele2.png" src="_images/tele2.png" style="width: 100pt;" />
+</div>
+<p>donde:</p>
+<p>T = At-satellite brightness temperature (K)</p>
+<p>Lλ = TOA spectral radiance (Watts/( m2 * srad * μm))</p>
+<p>K1 = Band-specific thermal conversion constant from the metadata (K1_CONSTANT_BAND_x, where x is the band number, 10 or 11)</p>
+<p>K2 = Band-specific thermal conversion constant from the metadata (K2_CONSTANT_BAND_x, where x is the band number, 10 or 11)</p>
+</div>
 </div>
 
 
@@ -98,14 +169,20 @@ esta fuente de información (meteorología, oceanografía, geología, geografía
         <div class="sphinxsidebarwrapper">
   <h3><a href="#">Table Of Contents</a></h3>
   <ul>
-<li><a class="reference internal" href="#">Welcome to taller SIGTE&#8217;s documentation!</a><ul>
-</ul>
-</li>
-<li><a class="reference internal" href="#indices-and-tables">Indices and tables</a></li>
-<li><a class="reference internal" href="#curs-sigte">CURS SIGTE</a></li>
-<li><a class="reference internal" href="#taller-teledeteccio">TALLER TELEDETECCIO</a></li>
+<li><a class="reference internal" href="#">TALLER TELEDETECCIO</a></li>
 <li><a class="reference internal" href="#indice-del-taller">Índice del taller</a></li>
 <li><a class="reference internal" href="#que-es-la-teledeteccion">¿Qué es la teledetección?</a></li>
+<li><a class="reference internal" href="#el-programa-landsat">El programa Landsat</a><ul>
+<li><a class="reference internal" href="#el-sensor-oli-operational-land-imager">El sensor OLI (Operational Land Imager)</a></li>
+<li><a class="reference internal" href="#el-sensor-tirs-thermal-infrarred-sensor">El sensor TIRS (Thermal Infrarred Sensor)</a></li>
+</ul>
+</li>
+<li><a class="reference internal" href="#calculo-de-la-temperatura-terrestre-lst-utilizando-las-bandas-del-tirs">Cálculo de la temperatura terrestre (LST) utilizando las bandas del TIRS</a><ul>
+<li><a class="reference internal" href="#split-window-algorithm">Split-window algorithm</a></li>
+<li><a class="reference internal" href="#convertir-los-nd-a-valores-de-radiancia-toa-top-of-athmosphere">Convertir los ND a valores de radiancia (TOA - Top of athmosphere)</a></li>
+<li><a class="reference internal" href="#obtener-la-temperatura-de-brillo-a-la-altura-de-la-atmosfera-toa">Obtener la temperatura de Brillo a la altura de la atmósfera (TOA)</a></li>
+</ul>
+</li>
 </ul>
 
   <h3>This Page</h3>
