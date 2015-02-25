@@ -58,6 +58,39 @@ _________________________________________
 El sensor TIRS capta información acerca la temperatura de la superficie terrestre a través de dos bandas del infrarroje térmico (banda 10 y banda 11). Permite distinguir entre la temperatura de la superficie terrestre y la temperatura atmosfércia. Tienen una resolución de 100 mts. 
 
 
+Las bandas del satélite Landsat 8
+_________________________________
+
+
++-------+------------------------+------------+----------+
+| Sensor|Band Number             | Amplitud   |Resolución|    
++=======+========================+============+==========+
+| Oli   |1. Coastal aerosol      |0,43-0,45μm |30m       |  
++-------+------------------------+------------+----------+
+|       |2. Blue                 |0,45-0,51μm |30m       |  
++-------+------------------------+------------+----------+
+|       |3. Green                |0,53-0,59μm |30m       |  
++-------+------------------------+------------+----------+
+|       |4. Red                  |0,64-0,67μm |30m       |  
++-------+------------------------+------------+----------+
+|       |5. Near Infrared (NIR)  |0,85-0,88μm |30m       |  
++-------+------------------------+------------+----------+
+|       |6. SWIR 1               |1,57-1,65μm |30m       |  
++-------+------------------------+------------+----------+
+|       |7. SWIR 2               |2,11-2,29μm |30m       |  
++-------+------------------------+------------+----------+
+|       |8. Panchromatic         |0,50-0,68μm |30m       |  
++-------+------------------------+------------+----------+
+|       |9. Cirrus               |1,36-1,38μm |30m       |  
++-------+------------------------+------------+----------+
+|TIRS   |10. Thermal Infrarred 1 |10,6-11,9μm |100m      |  
++-------+------------------------+------------+----------+
+|       |11. Thermal Infrarred 2 |11,5-12,51μm|100m      |  
++-------+------------------------+------------+----------+
+
+
+
+
 Cálculo de la temperatura terrestre (LST) utilizando las bandas del TIRS
 =========================================================================
 
@@ -106,11 +139,12 @@ TB\ :sub:`10`\ y TB\ :sub:`11`\ - temperatura de brillo de la banda 10 y 11 (K)
 
 ∆ - valor medio LSE (Land Surface Emissivity) de las bandas del TIR
 
-W - contenido de vapor de agua en el atmósfera
+W - contenido de vapor de agua en la atmósfera
 
 ∆ ε - Diferencia en LSE
 
-
+.. seealso::
+      **Estimation of Land Surface Temperature of Dindigul district using Landsat 8 Data** (2014). Rajeshwari A, Mani N D. International Journal of Research in Engineering and Technology.
 
 Convertir los ND a valores de radiancia (TOA - Top of athmosphere)
 ___________________________________________________________________
@@ -134,15 +168,16 @@ AL = Band-specific additive rescaling factor from the metadata (RADIANCE_ADD_BAN
 Qcal = Quantized and calibrated standard product pixel values (DN)  
 
 
-Obtener la temperatura de Brillo a la altura de la atmósfera (TOA)
-__________________________________________________________________
+
+Conversión a valores de reflectividad aparente y temperatura de Brillo a la altura de la atmósfera (TOA)
+__________________________________________________________________________________________________________
 
 A partir de los valores de radiancia, utilizando las bandas térmicas fácilmente se puede derivar la temperatura a la altura del sensor. 
 Las bandas del TIRS se pueden convertir a temperatura de brillo utilizando las constantes que figuran en el archivo de metadatos. De este modo:
 
 .. figure:: img/tele2.png
    :align:  center
-   :width: 75pt
+   :width: 100pt
 
 
 donde:              
@@ -156,6 +191,81 @@ K1 = Band-specific thermal conversion constant from the metadata (K1_CONSTANT_BA
 K2 = Band-specific thermal conversion constant from the metadata (K2_CONSTANT_BAND_x, where x is the band number, 10 or 11)
 
 
+Abrid el archivo de metadatos de la imagen (.met) con un editor de texto, y comprobad que figuran todos los parámetros para el cálculo de la reflectividad: **date, sun_elevation, product_date, gain**.
 
 
+.. note:: **Ejercicio 1**
+
+   Cread un nuevo location y mapset de GRASS, utilizando el mismo SR que la imagen Landsat 8.
+
+   Utilizad el comando **r.in.gdal** para importar todas las bandas de la imagen. 
+
+   Utilizad **i.landsat.toar** de GRASS para obtener la temperatura de brillo a la altura de la atmósfera a partir de las bandas térmicas de la imagen.
+
+   El método **uncorrected at-sensor values** de i.landsat.toar convierte los ND de la imagen a valores de radiancia, y posteriormente a reflectividad. Las bandas térmicas se convierten en primer lugar a valores de radiancia, y posteriormente a valores de temperatura a la altura del sensor, en grados Kelvin. 
+   
+
+  i.landsat.toar input=PREFIJO DE LAS BANDAS output=PREFIJO DE SALIDA metafile=RUTA AL FICHERO DE METADATOS sensor=oli8
+   
+   *Si se añade* **-r**, *se obtendrán valores de radiancia en vez de valores de reflectividad*. 
+
+
+Corrección atmosférica
+______________________
+
+Este método, no obstante, **no tiene en consideración las influencias atmosféricas** y asume un **terreno plano** y una **observación vertical**, lo cual supone una simplificación de la realidad. De ahí que debamos hablar de reflectividad aparente, pues el valor calculado representa sólo la reflectividad captada por el sensor, pero no la realmente medible en la superficie. 
+
+En cuanto a la **observación vertical**, es asumible para la mayor parte de los sensores de interés ambiental (Landsat, IRS, MOS-MESSR...), pero debe considerarse cuando la adquisición no es vertical, como ocurre con el SPOT-HRV.
+
+Por otro lado, la influencia atmosférica no afecta por igual a los dos componentes del cálculo de la reflectividad (energía reflejada e incidente), ya que el espesor de la atmósfera que atraviesan es distinto. Además, hay que considerar que a la radiancia solar directa hay que añadir la difusa, procedente de otros objetos vecinos. 
+Por ello, la radiancia que recibe el satélite no es la misma que la qque sale del suelo, que es la que interesa, dado que pretendemos medir la reflectividad de la cubierta, no la influida por la atmósfera.
+
+Existen distintos procedimientos para abordar las influencias atmosféricas, y determinar la radiancia del suelo, no la que recibe el satélite. 
+Desde GRASS, disponemos del módulo **i.landsat.toar** que permite aplicar el método de corrección **DOS** (Dark Object Substraction), y **i.atcorr**, para aplicar el método **6S** (Second Simulation of Satellite Signal in the Solar Spectrum).  
+
+Por su sencillez, utilizaremos el método DOS, que consiste en suponer que el mínimo valor de ND debe corresponder a las zonas oscuras presentes en la imagen y que en ausencia de efecto atmosférico ese valor debería ser cero. Conforme a esta suposición, se deduce que las diferencias entre el cero y los valores mínimos de los histogramas de las distintas bandas afectadas se deben al incremento de la radiancia absorvida por el sensor como consecuencia de la radiación difusa de la atmósfera. El procedimiento de corrección consiste en restar de todos los ND de cada banda, el ND mínimo de ella, de modo que se haga coincidir con el cero del origen del histograma.  
+
+Existen algunas variantes del método de corrección atmosférica DOS (DOS1, DOS2, DOS3 y DOS4)
+
+.. seealso::
+      **Classification and Change Detection Using Landsat TM Data: When and How to Correct Atmospheric Effects** (2000). Remote Sensing Environment.
+
+.. note:: **Ejercicio 2**
+
+   Aplicad el método de corrección atmosférica DOS1 a las bandas de la imagen Landsat 8.
+
+
+Cálculo de valores de emisividad de la superfície terrestre
+___________________________________________________________
+
+Otro de los parámetros del **SW algorithm** que es necesario obtener, es el de la emissividad de la superfície terrestre. 
+Para entender que es la **emisividad**, hay que hacer referencia previamente a la **emitancia**.
+
+.. note:: Emitancia y Emisividad
+
+   
+   Se entiende por **emitancia** el total de energía radiada en todas las direcciones desde una unidad de área y por unidad de tiempo. Se mide en vatios por metro cuadrado.
+
+   La **emisividad** es la relación entre la emitancia de una superfície (M) y la que ofrecería un emisor perfecto, denominado cuerpo negro, a la misma temperatura.
+
+A partir de Índice de Vegetación de Diferencia Normalizada **(NDVI)** es posible derivar el valor de emisividad de las cubiertas del suelo. 
+
+.. seealso::
+      **Mapping Land Surface Emissivity from NDVI: Application to European, African, and South American Areas** (1996). Enric Valor and Vicente Caselles. Elsevier Science Inc.
+ 
+**El índice de Vegetación de Diferencia Normalizada**
+
+El Índice de Vegetación de Diferencia Normalizada, también conocido como NDVI por sus siglas en inglés, es uno de los índices más importantes y más ampliamente utilizados.
+
+La fórmula para la obtención de este índice es la siguiente:
+
+**NDVI = (IR – R) / (IR + R)**
+
+donde R e IR son las reflectancias correspondientes al rojo (Banda 4) e infrarrojo (Banda 5) respectivamente.
+
+Los valores resultantes de este índice se encuentran dentro del intervalo (-1,1), indicando los valores altos la presencia de vegetación. 
+
+.. note:: **Ejercicio 3**
+
+   Utilizad el comando de GRASS **i.vi** para el cálculo de índices de vegetación.
 

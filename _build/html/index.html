@@ -84,6 +84,114 @@ esta fuente de información (meteorología, oceanografía, geología, geografía
 <h2>El sensor TIRS (Thermal Infrarred Sensor)<a class="headerlink" href="#el-sensor-tirs-thermal-infrarred-sensor" title="Permalink to this headline">¶</a></h2>
 <p>El sensor TIRS capta información acerca la temperatura de la superficie terrestre a través de dos bandas del infrarroje térmico (banda 10 y banda 11). Permite distinguir entre la temperatura de la superficie terrestre y la temperatura atmosfércia. Tienen una resolución de 100 mts.</p>
 </div>
+<div class="section" id="las-bandas-del-satelite-landsat-8">
+<h2>Las bandas del satélite Landsat 8<a class="headerlink" href="#las-bandas-del-satelite-landsat-8" title="Permalink to this headline">¶</a></h2>
+<table border="1" class="docutils">
+<colgroup>
+<col width="13%" />
+<col width="45%" />
+<col width="23%" />
+<col width="19%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Sensor</th>
+<th class="head">Band Number</th>
+<th class="head">Amplitud</th>
+<th class="head">Resolución</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Oli</td>
+<td><ol class="first last arabic simple">
+<li>Coastal aerosol</li>
+</ol>
+</td>
+<td>0,43-0,45μm</td>
+<td>30m</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td><ol class="first last arabic simple" start="2">
+<li>Blue</li>
+</ol>
+</td>
+<td>0,45-0,51μm</td>
+<td>30m</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td><ol class="first last arabic simple" start="3">
+<li>Green</li>
+</ol>
+</td>
+<td>0,53-0,59μm</td>
+<td>30m</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td><ol class="first last arabic simple" start="4">
+<li>Red</li>
+</ol>
+</td>
+<td>0,64-0,67μm</td>
+<td>30m</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td><ol class="first last arabic simple" start="5">
+<li>Near Infrared (NIR)</li>
+</ol>
+</td>
+<td>0,85-0,88μm</td>
+<td>30m</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td><ol class="first last arabic simple" start="6">
+<li>SWIR 1</li>
+</ol>
+</td>
+<td>1,57-1,65μm</td>
+<td>30m</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td><ol class="first last arabic simple" start="7">
+<li>SWIR 2</li>
+</ol>
+</td>
+<td>2,11-2,29μm</td>
+<td>30m</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td><ol class="first last arabic simple" start="8">
+<li>Panchromatic</li>
+</ol>
+</td>
+<td>0,50-0,68μm</td>
+<td>30m</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td><ol class="first last arabic simple" start="9">
+<li>Cirrus</li>
+</ol>
+</td>
+<td>1,36-1,38μm</td>
+<td>30m</td>
+</tr>
+<tr class="row-odd"><td>TIRS</td>
+<td><ol class="first last arabic simple" start="10">
+<li>Thermal Infrarred 1</li>
+</ol>
+</td>
+<td>10,6-11,9μm</td>
+<td>100m</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td><ol class="first last arabic simple" start="11">
+<li>Thermal Infrarred 2</li>
+</ol>
+</td>
+<td>11,5-12,51μm</td>
+<td>100m</td>
+</tr>
+</tbody>
+</table>
+</div>
 </div>
 <div class="section" id="calculo-de-la-temperatura-terrestre-lst-utilizando-las-bandas-del-tirs">
 <h1>Cálculo de la temperatura terrestre (LST) utilizando las bandas del TIRS<a class="headerlink" href="#calculo-de-la-temperatura-terrestre-lst-utilizando-las-bandas-del-tirs" title="Permalink to this headline">¶</a></h1>
@@ -131,8 +239,12 @@ esta fuente de información (meteorología, oceanografía, geología, geografía
 </table>
 <p>TB<sub>10</sub>y TB<sub>11</sub>- temperatura de brillo de la banda 10 y 11 (K)</p>
 <p>∆ - valor medio LSE (Land Surface Emissivity) de las bandas del TIR</p>
-<p>W - contenido de vapor de agua en el atmósfera</p>
+<p>W - contenido de vapor de agua en la atmósfera</p>
 <p>∆ ε - Diferencia en LSE</p>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><strong>Estimation of Land Surface Temperature of Dindigul district using Landsat 8 Data</strong> (2014). Rajeshwari A, Mani N D. International Journal of Research in Engineering and Technology.</p>
+</div>
 </div>
 <div class="section" id="convertir-los-nd-a-valores-de-radiancia-toa-top-of-athmosphere">
 <h2>Convertir los ND a valores de radiancia (TOA - Top of athmosphere)<a class="headerlink" href="#convertir-los-nd-a-valores-de-radiancia-toa-top-of-athmosphere" title="Permalink to this headline">¶</a></h2>
@@ -146,8 +258,8 @@ Las bandas del sensor OLI y TIRS pueden convertirse a valores de radiancia espec
 <p>AL = Band-specific additive rescaling factor from the metadata (RADIANCE_ADD_BAND_x, where x is the band number)</p>
 <p>Qcal = Quantized and calibrated standard product pixel values (DN)</p>
 </div>
-<div class="section" id="obtener-la-temperatura-de-brillo-a-la-altura-de-la-atmosfera-toa">
-<h2>Obtener la temperatura de Brillo a la altura de la atmósfera (TOA)<a class="headerlink" href="#obtener-la-temperatura-de-brillo-a-la-altura-de-la-atmosfera-toa" title="Permalink to this headline">¶</a></h2>
+<div class="section" id="conversion-a-valores-de-reflectividad-aparente-y-temperatura-de-brillo-a-la-altura-de-la-atmosfera-toa">
+<h2>Conversión a valores de reflectividad aparente y temperatura de Brillo a la altura de la atmósfera (TOA)<a class="headerlink" href="#conversion-a-valores-de-reflectividad-aparente-y-temperatura-de-brillo-a-la-altura-de-la-atmosfera-toa" title="Permalink to this headline">¶</a></h2>
 <p>A partir de los valores de radiancia, utilizando las bandas térmicas fácilmente se puede derivar la temperatura a la altura del sensor.
 Las bandas del TIRS se pueden convertir a temperatura de brillo utilizando las constantes que figuran en el archivo de metadatos. De este modo:</p>
 <div class="figure align-center">
@@ -158,6 +270,67 @@ Las bandas del TIRS se pueden convertir a temperatura de brillo utilizando las c
 <p>Lλ = TOA spectral radiance (Watts/( m2 * srad * μm))</p>
 <p>K1 = Band-specific thermal conversion constant from the metadata (K1_CONSTANT_BAND_x, where x is the band number, 10 or 11)</p>
 <p>K2 = Band-specific thermal conversion constant from the metadata (K2_CONSTANT_BAND_x, where x is the band number, 10 or 11)</p>
+<p>Abrid el archivo de metadatos de la imagen (.met) con un editor de texto, y comprobad que figuran todos los parámetros para el cálculo de la reflectividad: <strong>date, sun_elevation, product_date, gain</strong>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p><strong>Ejercicio 1</strong></p>
+<blockquote>
+<div><p>Cread un nuevo location y mapset de GRASS, utilizando el mismo SR que la imagen Landsat 8.</p>
+<p>Utilizad el comando <strong>r.in.gdal</strong> para importar todas las bandas de la imagen.</p>
+<p>Utilizad <strong>i.landsat.toar</strong> de GRASS para obtener la temperatura de brillo a la altura de la atmósfera a partir de las bandas térmicas de la imagen.</p>
+<p>El método <strong>uncorrected at-sensor values</strong> de i.landsat.toar convierte los ND de la imagen a valores de radiancia, y posteriormente a reflectividad. Las bandas térmicas se convierten en primer lugar a valores de radiancia, y posteriormente a valores de temperatura a la altura del sensor, en grados Kelvin.</p>
+</div></blockquote>
+<p>i.landsat.toar input=PREFIJO DE LAS BANDAS output=PREFIJO DE SALIDA metafile=RUTA AL FICHERO DE METADATOS sensor=oli8</p>
+<blockquote class="last">
+<div><em>Si se añade</em> <strong>-r</strong>, <em>se obtendrán valores de radiancia en vez de valores de reflectividad</em>.</div></blockquote>
+</div>
+</div>
+<div class="section" id="correccion-atmosferica">
+<h2>Corrección atmosférica<a class="headerlink" href="#correccion-atmosferica" title="Permalink to this headline">¶</a></h2>
+<p>Este método, no obstante, <strong>no tiene en consideración las influencias atmosféricas</strong> y asume un <strong>terreno plano</strong> y una <strong>observación vertical</strong>, lo cual supone una simplificación de la realidad. De ahí que debamos hablar de reflectividad aparente, pues el valor calculado representa sólo la reflectividad captada por el sensor, pero no la realmente medible en la superficie.</p>
+<p>En cuanto a la <strong>observación vertical</strong>, es asumible para la mayor parte de los sensores de interés ambiental (Landsat, IRS, MOS-MESSR...), pero debe considerarse cuando la adquisición no es vertical, como ocurre con el SPOT-HRV.</p>
+<p>Por otro lado, la influencia atmosférica no afecta por igual a los dos componentes del cálculo de la reflectividad (energía reflejada e incidente), ya que el espesor de la atmósfera que atraviesan es distinto. Además, hay que considerar que a la radiancia solar directa hay que añadir la difusa, procedente de otros objetos vecinos.
+Por ello, la radiancia que recibe el satélite no es la misma que la qque sale del suelo, que es la que interesa, dado que pretendemos medir la reflectividad de la cubierta, no la influida por la atmósfera.</p>
+<p>Existen distintos procedimientos para abordar las influencias atmosféricas, y determinar la radiancia del suelo, no la que recibe el satélite.
+Desde GRASS, disponemos del módulo <strong>i.landsat.toar</strong> que permite aplicar el método de corrección <strong>DOS</strong> (Dark Object Substraction), y <strong>i.atcorr</strong>, para aplicar el método <strong>6S</strong> (Second Simulation of Satellite Signal in the Solar Spectrum).</p>
+<p>Por su sencillez, utilizaremos el método DOS, que consiste en suponer que el mínimo valor de ND debe corresponder a las zonas oscuras presentes en la imagen y que en ausencia de efecto atmosférico ese valor debería ser cero. Conforme a esta suposición, se deduce que las diferencias entre el cero y los valores mínimos de los histogramas de las distintas bandas afectadas se deben al incremento de la radiancia absorvida por el sensor como consecuencia de la radiación difusa de la atmósfera. El procedimiento de corrección consiste en restar de todos los ND de cada banda, el ND mínimo de ella, de modo que se haga coincidir con el cero del origen del histograma.</p>
+<p>Existen algunas variantes del método de corrección atmosférica DOS (DOS1, DOS2, DOS3 y DOS4)</p>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><strong>Classification and Change Detection Using Landsat TM Data: When and How to Correct Atmospheric Effects</strong> (2000). Remote Sensing Environment.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p><strong>Ejercicio 2</strong></p>
+<p class="last">Aplicad el método de corrección atmosférica DOS1 a las bandas de la imagen Landsat 8.</p>
+</div>
+</div>
+<div class="section" id="calculo-de-valores-de-emisividad-de-la-superficie-terrestre">
+<h2>Cálculo de valores de emisividad de la superfície terrestre<a class="headerlink" href="#calculo-de-valores-de-emisividad-de-la-superficie-terrestre" title="Permalink to this headline">¶</a></h2>
+<p>Otro de los parámetros del <strong>SW algorithm</strong> que es necesario obtener, es el de la emissividad de la superfície terrestre.
+Para entender que es la <strong>emisividad</strong>, hay que hacer referencia previamente a la <strong>emitancia</strong>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p>Emitancia y Emisividad</p>
+<p>Se entiende por <strong>emitancia</strong> el total de energía radiada en todas las direcciones desde una unidad de área y por unidad de tiempo. Se mide en vatios por metro cuadrado.</p>
+<p class="last">La <strong>emisividad</strong> es la relación entre la emitancia de una superfície (M) y la que ofrecería un emisor perfecto, denominado cuerpo negro, a la misma temperatura.</p>
+</div>
+<p>A partir de Índice de Vegetación de Diferencia Normalizada <strong>(NDVI)</strong> es posible derivar el valor de emisividad de las cubiertas del suelo.</p>
+<div class="admonition-see-also admonition seealso">
+<p class="first admonition-title">See also</p>
+<p class="last"><strong>Mapping Land Surface Emissivity from NDVI: Application to European, African, and South American Areas</strong> (1996). Enric Valor and Vicente Caselles. Elsevier Science Inc.</p>
+</div>
+<p><strong>El índice de Vegetación de Diferencia Normalizada</strong></p>
+<p>El Índice de Vegetación de Diferencia Normalizada, también conocido como NDVI por sus siglas en inglés, es uno de los índices más importantes y más ampliamente utilizados.</p>
+<p>La fórmula para la obtención de este índice es la siguiente:</p>
+<p><strong>NDVI = (IR – R) / (IR + R)</strong></p>
+<p>donde R e IR son las reflectancias correspondientes al rojo (Banda 4) e infrarrojo (Banda 5) respectivamente.</p>
+<p>Los valores resultantes de este índice se encuentran dentro del intervalo (-1,1), indicando los valores altos la presencia de vegetación.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p><strong>Ejercicio 3</strong></p>
+<p class="last">Utilizad el comando de GRASS <strong>i.vi</strong> para el cálculo de índices de vegetación.</p>
+</div>
 </div>
 </div>
 
@@ -175,12 +348,15 @@ Las bandas del TIRS se pueden convertir a temperatura de brillo utilizando las c
 <li><a class="reference internal" href="#el-programa-landsat">El programa Landsat</a><ul>
 <li><a class="reference internal" href="#el-sensor-oli-operational-land-imager">El sensor OLI (Operational Land Imager)</a></li>
 <li><a class="reference internal" href="#el-sensor-tirs-thermal-infrarred-sensor">El sensor TIRS (Thermal Infrarred Sensor)</a></li>
+<li><a class="reference internal" href="#las-bandas-del-satelite-landsat-8">Las bandas del satélite Landsat 8</a></li>
 </ul>
 </li>
 <li><a class="reference internal" href="#calculo-de-la-temperatura-terrestre-lst-utilizando-las-bandas-del-tirs">Cálculo de la temperatura terrestre (LST) utilizando las bandas del TIRS</a><ul>
 <li><a class="reference internal" href="#split-window-algorithm">Split-window algorithm</a></li>
 <li><a class="reference internal" href="#convertir-los-nd-a-valores-de-radiancia-toa-top-of-athmosphere">Convertir los ND a valores de radiancia (TOA - Top of athmosphere)</a></li>
-<li><a class="reference internal" href="#obtener-la-temperatura-de-brillo-a-la-altura-de-la-atmosfera-toa">Obtener la temperatura de Brillo a la altura de la atmósfera (TOA)</a></li>
+<li><a class="reference internal" href="#conversion-a-valores-de-reflectividad-aparente-y-temperatura-de-brillo-a-la-altura-de-la-atmosfera-toa">Conversión a valores de reflectividad aparente y temperatura de Brillo a la altura de la atmósfera (TOA)</a></li>
+<li><a class="reference internal" href="#correccion-atmosferica">Corrección atmosférica</a></li>
+<li><a class="reference internal" href="#calculo-de-valores-de-emisividad-de-la-superficie-terrestre">Cálculo de valores de emisividad de la superfície terrestre</a></li>
 </ul>
 </li>
 </ul>
