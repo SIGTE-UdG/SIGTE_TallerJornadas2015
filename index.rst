@@ -232,7 +232,11 @@ Existen algunas variantes del método de corrección atmosférica DOS (DOS1, DOS
 
 .. note:: **Ejercicio 2**
 
-   Aplicad el método de corrección atmosférica DOS1 a las bandas de la imagen Landsat 8.
+   Aplicad el método de corrección atmosférica DOS1 a las bandas de la imagen Landsat 8, dejando por defecto los valores correspondientes a **Percent of solar radiance** y **Minimum pixels to consider digital number as dark object**.
+
+   i.landsat.toar input=PREFIX output=PREFIX metfile=ARCHIVO MET method=dos1
+
+   El proceso puede demorarse algunos minutos. 
 
 http://gis.stackexchange.com/questions/40531/how-to-determine-aerosol-model-value-for-i-atcorr-in-grass
 
@@ -266,7 +270,105 @@ donde R e IR son las reflectancias correspondientes al rojo (Banda 4) e infrarro
 
 Los valores resultantes de este índice se encuentran dentro del intervalo (-1,1), indicando los valores altos la presencia de vegetación. 
 
+
+(NDVI < 0), correspondientes a agua o cubiertas artificiales
+
+(0 < NDVI < 0,2), correspondientes a suelo desnudo o vegetación muerta
+
+(0,2 < NDVI < 0,4), correspondientes a vegetación dispersa o poco vigorosa
+
+(0,4 < NDVI < 0,6), correspondientes a vegetación abundante y vigorosa
+
+(NDVI > 0,6), correspondientes a vegetación muy densa y vigorosa,
+
+
 .. note:: **Ejercicio 3**
 
-   Utilizad el comando de GRASS **i.vi** para el cálculo de índices de vegetación.
+   Utilizad el comando de GRASS **i.vi** para el cálculo de índices de vegetación.Las bandas a utilizar serán las correspondientes al rojo (B4) y al infrarrojo (B5) corregidas atmosféricamente. 
+
+   i.vi red=B4 corregida atmosfericamente output=NDVI viname=ndvi nir=B5 corregida atmosféricamente
+
+   Visualizad el histograma de la imagen correspondiente al NDVI que habéis creado. Los valores debería estar entre el intervalo -1,1.
+
+.. figure:: img/tele3.png
+   :align:  center
+   :width: 350pt
+
+.. note:: **Ejercicio 4**
+
+   Aplicad una paleta de color específica para la representación de capas NDVI
+
+   r.colors map=NDVI color=ndvi
+
+**Fractional Vegetation Cover (FVC)**
+El FVC es un índice que permite estimar la fracción de superfície ocupada por vegetación, y se obtiene a partir del NDVI. 
+Obtener el FVC es necesario para hallar los valores de LSE. 
+
+.. figure:: img/tele4.png
+   :align:  center
+   :width: 250pt
+
+
+.. note:: **Ejercicio 5**
+
+   Utilizad la calculadora raster de GRASS para obtener el FVC
+   Podéis utilizar r.info para hallar los valores mínimo y máximo de la capa NDVI.
+
+   r.mapcalc "FVC = ((NDVI+NDVImin)/(NDVImax - NDVImin))^2"
+
+
+**Land Surface Emissivity**
+
+Finalmente, podréis obtener los valores correspondientes a LSE para las bandas del sensor TIRS (Band 10 y Band 11), teniendo en consideración que:
+
+.. figure:: img/tele5.png
+   :align:  center
+   :width: 150pt
+
+donde:
+
+.. figure:: img/tele6.png
+   :align: center
+   :width: 150pt
+
++------------+-------+--------+
+| Emissivity |Band 10|Band 11 |  
++============+=======+========+
+|Soil        |0.971  |0.977   |
++------------+-------+--------+
+|Vegetation  |0.987  |0.989   |
++------------+-------+--------+
+Fuente: Skokovic et al, 2014; Sobrino et al, 1996; Shaouhua Zhao et al, 2009.
+
+.. note:: **Ejercicio 6**
+
+   Utilizad la calculadora raster de GRASS para obtener los valores LSE de las bandas 10 y 11.
+
+   r.mapcalc "LSE_B10 = 0.971*(1-FVC)+0.987*FVC"
+
+   r.mapcalc "LSE_B11 = 0.977*(1-FVC)+0.989*FVC"
+
+
+Aplicación del Split-Window Algorithm
+______________________________________
+
+Recordad que el SW Algorithm que vamos a aplicar, es:
+
+LST = TB\ :sub:`10`\ + C\ :sub:`1`\ (TB\ :sub:`10`\-TB\ :sub:`11`\ ) + C\ :sub:`2`\ (TB\ :sub:`10`\ -TB\ :sub:`11`\ )2+ C\ :sub:`0`\ +(C\ :sub:`3`\ +C\ :sub:`4`\ W) (1-ε) + (C\ :sub:`5`\ +C\ :sub:`6`\ W) ∆ ε
+
+En este moment, ya únicamente nos faltan los parámetros correspondientes a:
+
+∆ - valor medio LSE (Land Surface Emissivity) de las bandas del TIR = (LSE\ :sub:`10`\ + LSE\ :sub:`11`\) / 2
+
+∆ ε - Diferencia en LSE = LSE\ :sub:`10`\ - LSE\ :sub:`11`\
+
+.. note:: **Ejercicio 7**
+
+   Utilizad la calculadora raster de GRASS para obtener los valores correspondientes a al **valor medio LSE** y a la **diferencia en LSE**.
+
+
+ref_B10@PERMANENT+1.378*( ref_B10@PERMANENT - ref_B11@PERMANENT)+0.183*( ref_B10@PERMANENT - ref_B11@PERMANENT ) ^2-0.268+ (54.300-2.238*0.013 )*(1- LSE_valorMedio@PERMANENT)+(-129.20+16.40*0.013)* ( LSE_B10@PERMANENT - LSE_B11@PERMANENT     
+
+http://ladsweb.nascom.nasa.gov/data/search.html
+
 

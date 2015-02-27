@@ -302,8 +302,11 @@ Desde GRASS, disponemos del módulo <strong>i.landsat.toar</strong> que permite 
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p><strong>Ejercicio 2</strong></p>
-<p class="last">Aplicad el método de corrección atmosférica DOS1 a las bandas de la imagen Landsat 8.</p>
+<p>Aplicad el método de corrección atmosférica DOS1 a las bandas de la imagen Landsat 8, dejando por defecto los valores correspondientes a <strong>Percent of solar radiance</strong> y <strong>Minimum pixels to consider digital number as dark object</strong>.</p>
+<p>i.landsat.toar input=PREFIX output=PREFIX metfile=ARCHIVO MET method=dos1</p>
+<p class="last">El proceso puede demorarse algunos minutos.</p>
 </div>
+<p><a class="reference external" href="http://gis.stackexchange.com/questions/40531/how-to-determine-aerosol-model-value-for-i-atcorr-in-grass">http://gis.stackexchange.com/questions/40531/how-to-determine-aerosol-model-value-for-i-atcorr-in-grass</a></p>
 </div>
 <div class="section" id="calculo-de-valores-de-emisividad-de-la-superficie-terrestre">
 <h2>Cálculo de valores de emisividad de la superfície terrestre<a class="headerlink" href="#calculo-de-valores-de-emisividad-de-la-superficie-terrestre" title="Permalink to this headline">¶</a></h2>
@@ -326,11 +329,95 @@ Para entender que es la <strong>emisividad</strong>, hay que hacer referencia pr
 <p><strong>NDVI = (IR – R) / (IR + R)</strong></p>
 <p>donde R e IR son las reflectancias correspondientes al rojo (Banda 4) e infrarrojo (Banda 5) respectivamente.</p>
 <p>Los valores resultantes de este índice se encuentran dentro del intervalo (-1,1), indicando los valores altos la presencia de vegetación.</p>
+<p>(NDVI &lt; 0), correspondientes a agua o cubiertas artificiales</p>
+<p>(0 &lt; NDVI &lt; 0,2), correspondientes a suelo desnudo o vegetación muerta</p>
+<p>(0,2 &lt; NDVI &lt; 0,4), correspondientes a vegetación dispersa o poco vigorosa</p>
+<p>(0,4 &lt; NDVI &lt; 0,6), correspondientes a vegetación abundante y vigorosa</p>
+<p>(NDVI &gt; 0,6), correspondientes a vegetación muy densa y vigorosa,</p>
 <div class="admonition note">
 <p class="first admonition-title">Note</p>
 <p><strong>Ejercicio 3</strong></p>
-<p class="last">Utilizad el comando de GRASS <strong>i.vi</strong> para el cálculo de índices de vegetación.</p>
+<p>Utilizad el comando de GRASS <strong>i.vi</strong> para el cálculo de índices de vegetación.Las bandas a utilizar serán las correspondientes al rojo (B4) y al infrarrojo (B5) corregidas atmosféricamente.</p>
+<p>i.vi red=B4 corregida atmosfericamente output=NDVI viname=ndvi nir=B5 corregida atmosféricamente</p>
+<p class="last">Visualizad el histograma de la imagen correspondiente al NDVI que habéis creado. Los valores debería estar entre el intervalo -1,1.</p>
 </div>
+<div class="figure align-center">
+<img alt="_images/tele3.png" src="_images/tele3.png" style="width: 350pt;" />
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p><strong>Ejercicio 4</strong></p>
+<p>Aplicad una paleta de color específica para la representación de capas NDVI</p>
+<p class="last">r.colors map=NDVI color=ndvi</p>
+</div>
+<p><strong>Fractional Vegetation Cover (FVC)</strong>
+El FVC es un índice que permite estimar la fracción de superfície ocupada por vegetación, y se obtiene a partir del NDVI.
+Obtener el FVC es necesario para hallar los valores de LSE.</p>
+<div class="figure align-center">
+<img alt="_images/tele4.png" src="_images/tele4.png" style="width: 250pt;" />
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p><strong>Ejercicio 5</strong></p>
+<p>Utilizad la calculadora raster de GRASS para obtener el FVC
+Podéis utilizar r.info para hallar los valores mínimo y máximo de la capa NDVI.</p>
+<p class="last">r.mapcalc &#8220;FVC = ((NDVI+NDVImin)/(NDVImax - NDVImin))^2&#8221;</p>
+</div>
+<p><strong>Land Surface Emissivity</strong></p>
+<p>Finalmente, podréis obtener los valores correspondientes a LSE para las bandas del sensor TIRS (Band 10 y Band 11), teniendo en consideración que:</p>
+<div class="figure align-center">
+<img alt="_images/tele5.png" src="_images/tele5.png" style="width: 150pt;" />
+</div>
+<p>donde:</p>
+<div class="figure align-center">
+<img alt="_images/tele6.png" src="_images/tele6.png" style="width: 150pt;" />
+</div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="44%" />
+<col width="26%" />
+<col width="30%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Emissivity</th>
+<th class="head">Band 10</th>
+<th class="head">Band 11</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Soil</td>
+<td>0.971</td>
+<td>0.977</td>
+</tr>
+<tr class="row-odd"><td>Vegetation</td>
+<td>0.987</td>
+<td>0.989</td>
+</tr>
+</tbody>
+</table>
+<p>Fuente: Skokovic et al, 2014; Sobrino et al, 1996; Shaouhua Zhao et al, 2009.</p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p><strong>Ejercicio 6</strong></p>
+<p>Utilizad la calculadora raster de GRASS para obtener los valores LSE de las bandas 10 y 11.</p>
+<p>r.mapcalc &#8220;LSE_B10 = 0.971*(1-FVC)+0.987*FVC&#8221;</p>
+<p class="last">r.mapcalc &#8220;LSE_B11 = 0.977*(1-FVC)+0.989*FVC&#8221;</p>
+</div>
+</div>
+<div class="section" id="aplicacion-del-split-window-algorithm">
+<h2>Aplicación del Split-Window Algorithm<a class="headerlink" href="#aplicacion-del-split-window-algorithm" title="Permalink to this headline">¶</a></h2>
+<p>Recordad que el SW Algorithm que vamos a aplicar, es:</p>
+<p>LST = TB<sub>10</sub>+ C<sub>1</sub>(TB<sub>10</sub>-TB<sub>11</sub>) + C<sub>2</sub>(TB<sub>10</sub>-TB<sub>11</sub>)2+ C<sub>0</sub>+(C<sub>3</sub>+C<sub>4</sub>W) (1-ε) + (C<sub>5</sub>+C<sub>6</sub>W) ∆ ε</p>
+<p>En este moment, ya únicamente nos faltan los parámetros correspondientes a:</p>
+<p>∆ - valor medio LSE (Land Surface Emissivity) de las bandas del TIR = (LSE<sub>10</sub>+ LSE<sub>11</sub>) / 2</p>
+<p>∆ ε - Diferencia en LSE = LSE<sub>10</sub>- LSE<sub>11</sub></p>
+<div class="admonition note">
+<p class="first admonition-title">Note</p>
+<p><strong>Ejercicio 7</strong></p>
+<p class="last">Utilizad la calculadora raster de GRASS para obtener los valores correspondientes a al <strong>valor medio LSE</strong> y a la <strong>diferencia en LSE</strong>.</p>
+</div>
+<p><a class="reference external" href="mailto:ref_B10&#37;&#52;&#48;PERMANENT+1">ref_B10<span>&#64;</span>PERMANENT+1</a>.378*( <a class="reference external" href="mailto:ref_B10&#37;&#52;&#48;PERMANENT">ref_B10<span>&#64;</span>PERMANENT</a> - <a class="reference external" href="mailto:ref_B11&#37;&#52;&#48;PERMANENT">ref_B11<span>&#64;</span>PERMANENT</a>)+0.183*( <a class="reference external" href="mailto:ref_B10&#37;&#52;&#48;PERMANENT">ref_B10<span>&#64;</span>PERMANENT</a> - <a class="reference external" href="mailto:ref_B11&#37;&#52;&#48;PERMANENT">ref_B11<span>&#64;</span>PERMANENT</a> ) ^2-0.268+ (54.300-2.238*0.013 )*(1- <a class="reference external" href="mailto:LSE_valorMedio&#37;&#52;&#48;PERMANENT">LSE_valorMedio<span>&#64;</span>PERMANENT</a>)+(-129.20+16.40*0.013)* ( <a class="reference external" href="mailto:LSE_B10&#37;&#52;&#48;PERMANENT">LSE_B10<span>&#64;</span>PERMANENT</a> - <a class="reference external" href="mailto:LSE_B11&#37;&#52;&#48;PERMANENT">LSE_B11<span>&#64;</span>PERMANENT</a></p>
+<p><a class="reference external" href="http://ladsweb.nascom.nasa.gov/data/search.html">http://ladsweb.nascom.nasa.gov/data/search.html</a></p>
 </div>
 </div>
 
@@ -357,6 +444,7 @@ Para entender que es la <strong>emisividad</strong>, hay que hacer referencia pr
 <li><a class="reference internal" href="#conversion-a-valores-de-reflectividad-aparente-y-temperatura-de-brillo-a-la-altura-de-la-atmosfera-toa">Conversión a valores de reflectividad aparente y temperatura de Brillo a la altura de la atmósfera (TOA)</a></li>
 <li><a class="reference internal" href="#correccion-atmosferica">Corrección atmosférica</a></li>
 <li><a class="reference internal" href="#calculo-de-valores-de-emisividad-de-la-superficie-terrestre">Cálculo de valores de emisividad de la superfície terrestre</a></li>
+<li><a class="reference internal" href="#aplicacion-del-split-window-algorithm">Aplicación del Split-Window Algorithm</a></li>
 </ul>
 </li>
 </ul>
