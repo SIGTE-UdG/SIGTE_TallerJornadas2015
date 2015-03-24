@@ -7,4 +7,8 @@ vagrant
 Vagrantfile
 .metadata
 datos
-
+_build
+.project
+.settings
+.pydevproject
+.ejercicios_*.py
