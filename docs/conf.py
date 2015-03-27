@@ -34,7 +34,7 @@ locale_dirs = ['locale/']
 extensions = []
 
 # Add any paths that contain templates here, relative to this directory.
-templates_path = ['_templates']
+templates_path = ['./_templates']
 
 # The suffix of source filenames.
 source_suffix = '.rst'
@@ -46,7 +46,7 @@ source_suffix = '.rst'
 master_doc = 'index'
 
 # General information about the project.
-project = u'taller SIGTE'
+project = u'TALLER TELEDETECCIÓN'
 copyright = u'2015, Josep Sitjar i Alexandre Busquets'
 
 # The version info for the project you're documenting, acts as replacement for
@@ -102,7 +102,7 @@ pygments_style = 'sphinx'
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 
-html_theme = "sigte_theme"
+html_theme = "bootstrap"
 
 # Theme options are theme-specific and customize the look and feel of a theme
 # further.  For a list of options available for each theme, see the
