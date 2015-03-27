@@ -18,4 +18,6 @@ prefijo_imagen = DIRECTORIO_IMAGENES.split('/')[-1]
 print "Ejercicio 1"
 archivo_metfile = "%s/%s_MTL.txt" % (DIRECTORIO_IMAGENES, prefijo_imagen)
 ##EJERCICIO## ##EJECUTAR_COMANDO## ##OBTENER TEMPERATURA DE BRILLO## ##PARÁMETROS##
-
+grass.run_command('i.landsat.toar', input='%s_B' % prefijo_imagen,
+                   output='REF_',
+                   metfile=archivo_metfile, sensor='oli8')

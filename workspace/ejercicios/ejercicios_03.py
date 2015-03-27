@@ -13,5 +13,7 @@ import grass.script as grass
 
 
 ##EJERCICIO## ##EJECUTAR_COMANDO## ##CÁLCULO DE ÍNDICES DE VEGETACIÓN## ##PARÁMETROS##
-
+grass.run_command('i.vi', red=u'DOS_4',
+                   output='NDVI', viname='ndvi',
+                   nir=u'DOS_5')
 

@@ -14,9 +14,11 @@ import grass.script as grass
 
 
 ##EJERCICIO## ##resultado = PARSEAR_COMANDO## ##OBTENER INFORMACIÓN DE NDVI## ##PARÁMETROS## ##FLAGS, r##
-
+resultado = grass.parse_command('r.info', map='NDVI', flags='r')
 NDVImin = resultado['min']
 NDVImax = resultado['max']
 
 ##EJERCICIO## ##EJECUTAR_COMANDO## ##CÁLCULO RÁSTER## ##PARÁMETROS##
-
+grass.run_command('r.mapcalc',
+                   expression='FVC = ((NDVI+%s)/(%s - %s))^2'
+                   % (NDVImin,NDVImax,NDVImin))

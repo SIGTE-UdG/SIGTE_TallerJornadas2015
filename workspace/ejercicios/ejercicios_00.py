@@ -30,7 +30,7 @@ for fn in os.listdir(DIRECTORIO_IMAGENES):
         try:
             #Importamos la imagen
             ##EJERCICIO## ##EJECUTAR_COMANDO## ##IMPORTAR IMAGEN RÁSTER## ##PARÁMETROS##
-
+            grass.run_command('r.in.gdal', input=imagen, output=nombre)
         except:
             print "No se ha podido importar la imagen %s" % imagen
 
