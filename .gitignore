@@ -12,3 +12,4 @@ _build
 .pydevproject
 .ejercicios_*.py
 girona
+gdrive.sh
