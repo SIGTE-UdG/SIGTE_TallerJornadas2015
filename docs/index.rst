@@ -560,7 +560,7 @@ Además de la consola de python de GRASS también podemos trabajar con GRASS des
 
 ::
    
-   python nuestro_script.py
+   $ python nuestro_script.py
 
 Y que este ejecute cógigo que llame a los módulos de GRASS.
 
