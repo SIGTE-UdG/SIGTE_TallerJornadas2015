@@ -1,0 +1,794 @@
+
+<!DOCTYPE html>
+
+
+<html xmlns="http://www.w3.org/1999/xhtml">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+    
+    <title>TALLER TELEDETECCIÓN &mdash; documentación de TALLER TELEDETECCIÓN - 0.1</title>
+    
+    <link rel="stylesheet" href="_static/basic.css" type="text/css" />
+    <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+    <link rel="stylesheet" href="_static/my-style.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootswatch-3.1.0/united/bootstrap.min.css" type="text/css" />
+    <link rel="stylesheet" href="_static/bootstrap-sphinx.css" type="text/css" />
+    
+    <script type="text/javascript">
+      var DOCUMENTATION_OPTIONS = {
+        URL_ROOT:    './',
+        VERSION:     '0.1',
+        COLLAPSE_INDEX: false,
+        FILE_SUFFIX: '.html',
+        HAS_SOURCE:  true
+      };
+    </script>
+    <script type="text/javascript" src="_static/jquery.js"></script>
+    <script type="text/javascript" src="_static/underscore.js"></script>
+    <script type="text/javascript" src="_static/doctools.js"></script>
+    <script type="text/javascript" src="_static/translations.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-1.11.0.min.js"></script>
+    <script type="text/javascript" src="_static/js/jquery-fix.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-3.1.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="_static/bootstrap-sphinx.js"></script>
+    <link rel="top" title="documentación de TALLER TELEDETECCIÓN - 0.1" href="#" />
+<meta charset='utf-8'>
+<meta http-equiv='X-UA-Compatible' content='IE=edge,chrome=1'>
+<meta name='viewport' content='width=device-width, initial-scale=1.0, maximum-scale=1'>
+<meta name="apple-mobile-web-app-capable" content="yes">
+
+  </head>
+  <body>
+
+  <div id="navbar" class="navbar navbar-default navbar-fixed-top">
+    <div class="container">
+      <div class="navbar-header">
+        <!-- .btn-navbar is used as the toggle for collapsed navbar content -->
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".nav-collapse">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="#">
+          TALLER TELEDETECCIÓN</a>
+        <span class="navbar-text navbar-version pull-left"><b>0.1</b></span>
+      </div>
+
+        <div class="collapse navbar-collapse nav-collapse">
+          <ul class="nav navbar-nav">
+            <li class="divider-vertical"></li>
+            
+            
+              <li class="dropdown globaltoc-container">
+  <a role="button"
+     id="dLabelGlobalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Site <b class="caret"></b></a>
+  <ul class="dropdown-menu globaltoc"
+      role="menu"
+      aria-labelledby="dLabelGlobalToc"></ul>
+</li>
+              
+                <li class="dropdown">
+  <a role="button"
+     id="dLabelLocalToc"
+     data-toggle="dropdown"
+     data-target="#"
+     href="#">Page <b class="caret"></b></a>
+  <ul class="dropdown-menu localtoc"
+      role="menu"
+      aria-labelledby="dLabelLocalToc"><ul>
+<li><a class="reference internal" href="#">TALLER TELEDETECCIÓN</a><ul>
+<li><a class="reference internal" href="#que-es-la-teledeteccion">¿Qué es la teledetección?</a></li>
+<li><a class="reference internal" href="#descarga-de-imagenes-satelite">Descarga de imágenes satélite</a></li>
+<li><a class="reference internal" href="#el-programa-landsat">El programa Landsat</a></li>
+<li><a class="reference internal" href="#calculo-de-la-temperatura-terrestre-lst-utilizando-las-bandas-del-tirs">Cálculo de la temperatura terrestre (LST) utilizando las bandas del TIRS</a></li>
+<li><a class="reference internal" href="#python-y-grass">Python y GRASS</a></li>
+</ul>
+</li>
+</ul>
+</ul>
+</li>
+              
+            
+            
+              
+                
+              
+            
+            
+            
+            
+              <li class="hidden-sm"></li>
+            
+          </ul>
+
+          
+            
+<form class="navbar-form navbar-right" action="search.html" method="get">
+ <div class="form-group">
+  <input type="text" name="q" class="form-control" placeholder="Search" />
+ </div>
+  <input type="hidden" name="check_keywords" value="yes" />
+  <input type="hidden" name="area" value="default" />
+</form>
+          
+        </div>
+    </div>
+  </div>
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      
+  <div class="section" id="taller-teledeteccion">
+<h1><a class="toc-backref" href="#id2">TALLER TELEDETECCIÓN</a><a class="headerlink" href="#taller-teledeteccion" title="Enlazar permanentemente con este título">¶</a></h1>
+<p>Instructor: Josep Sitjar, Alexandre Busquets (SIGTE – Universitat de Girona)</p>
+<p>El taller se centrará fundamentalmente en descubrir las potencialidades de la teledetección como fuente de datos esencial en los SIG.
+Se hará una breve introducción al proceso de adquisición de imágenes de satélite en función de la plataforma (Landsat, Spot…) y de los sensores encargados de realizar la observación, así como de los principales aspectos a tener en cuenta al trabajar con estas imágenes. Mostraremos algunos de los principales portales disponibles para la descarga de imágenes de satélite.
+Son muchas las herramientas que ofrece el software GRASS GIS para el trabajo con imágenes de satélite, con lo que buena parte del taller se centrará en descubrir algunos de los principales módulos de este software y el flujo de trabajo para desarrollar un proyecto de teledetección: desde la visualización al análisis, pasando también por los correspondientes procesos de corrección.
+Finalmente, se desarrollarán algunos scripts en Python para el establecimiento de rutinas de análisis de los datos obtenidos.</p>
+<div class="contents topic" id="contents">
+<p class="topic-title first">Contents</p>
+<ul class="simple">
+<li><a class="reference internal" href="#taller-teledeteccion" id="id2">TALLER TELEDETECCIÓN</a><ul>
+<li><a class="reference internal" href="#que-es-la-teledeteccion" id="id3">¿Qué es la teledetección?</a></li>
+<li><a class="reference internal" href="#descarga-de-imagenes-satelite" id="id4">Descarga de imágenes satélite</a></li>
+<li><a class="reference internal" href="#el-programa-landsat" id="id5">El programa Landsat</a></li>
+<li><a class="reference internal" href="#calculo-de-la-temperatura-terrestre-lst-utilizando-las-bandas-del-tirs" id="id6">Cálculo de la temperatura terrestre (LST) utilizando las bandas del TIRS</a></li>
+<li><a class="reference internal" href="#python-y-grass" id="id7">Python y GRASS</a></li>
+</ul>
+</li>
+</ul>
+</div>
+<div class="section" id="que-es-la-teledeteccion">
+<h2><a class="toc-backref" href="#id3">¿Qué es la teledetección?</a><a class="headerlink" href="#que-es-la-teledeteccion" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>El término teledetección hace referencia a las distintas formas de adquirir información de forma remota a través
+de sensores sin entrar en contacto físico con el objeto. Los sensores se localizan en plataformas de observación (bien en aviones o satélites), y registran la información centrada en las regiones del espectro electromagnético. La teledetección tiene como objetivo
+obtener las características de la superficie observada y los fenómenos que en ella tienen lugar. Distintas disciplinas se sirven de
+esta fuente de información (meteorología, oceanografía, geología, geografía,...), por lo que esta nueva forma de ver nuestro planeta viene acompañada por el desarrollo de potentes modelos físico-matemáticos que tratan de describir los procesos físicos que tienen lugar en nuestro entorno.</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/tele1.jpeg"><img alt="_images/tele1.jpeg" src="_images/tele1.jpeg" style="width: 450pt;" /></a>
+</div>
+<div class="section" id="fundamentos-de-la-teledeteccion">
+<h3>Fundamentos de la teledetección<a class="headerlink" href="#fundamentos-de-la-teledeteccion" title="Enlazar permanentemente con este título">¶</a></h3>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/tele8.png"><img alt="_images/tele8.png" src="_images/tele8.png" style="width: 250pt;" /></a>
+<p class="caption">Esquema de un sistema de teledetección. Fuente: V.Olaya.</p>
+</div>
+<ol class="loweralpha simple">
+<li><strong>Fuente de radiación</strong> (puede ser natural) o artificial. La primera de ellas es la forma más importante de teledetección, pues se deriva directamente de la luz solar, principal fuente de energía del plantea. El sol ilumina la superficie terrestre, que refleja esa energía en función del tipo de cubierta presente sobre ella. Este flujo reflejado se recoge por el sensor, que lo transmite posteriormente a las estaciones receptoras.</li>
+<li><strong>Objetos</strong> que interaccionan con la radiación o la emiten.</li>
+<li><strong>Atmósfera</strong> por la que se desplaza la radiación, tanto desde la fuente hasta el objeto como desde el objeto hasta el receptor. La atmósfera también interactúa con la radiación, introduciendo igualmente perturbaciones en ella.</li>
+<li><strong>Receptor</strong> que recoge la radiación una vez ésta ha sido perturbada o emitida por los objetos. El receptor va a generar como producto final una imagen en cuyas celdas se va a contener un valor que indica la intensidad de la radiación. Estos valores son valores enteros que indican el nivel de dicha radiación entre una escala definida (habitualmente valores entre 1 y 256), y se conocen dentro del ámbito de la teledetección como Niveles Digitales</li>
+</ol>
+</div>
+<div class="section" id="la-radiacion-electromagnetica">
+<h3>La radiación electromagnética<a class="headerlink" href="#la-radiacion-electromagnetica" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>La radiación electromagnética es una de las cuatro fuerzas fundamentales en la naturaleza, y deriva del campo electromagnético. Un cuerpo con carga, en reposo o que se mueve en el espacio, genera un campo electromagnético definido mediante dos vectores: el campo electrónico y el campo magnético. Así, se define la <strong>radiación electromagnética</strong> como una <strong>combinación de campos eléctricos y magnéticos oscilantes y perpendiculares entre sí que se propagan a través del espacio transportando energía de un lado a otro</strong>.</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/tele9.png"><img alt="_images/tele9.png" src="_images/tele9.png" style="width: 300pt;" /></a>
+<p class="caption">Esquema de onda electromagnética. Fuente: E. Chuvieco</p>
+</div>
+<p>Según la teoría ondulatoria, las ondas electromagnéticas se desplaza a la velocidad de la luz siguiendo un modelo armónico y continuo, y se pueden describir por dos elementos: <strong>longitud de onda</strong>  (λ)  y <strong>frecuencia</strong> (F). La primera hace referencia a la distancia entre dos tipos sucesivos de onda, mientras que la frecuencia designa el número de ciclos pasando por un punto fijo en una unidad de tiempo. Ambos elementos están inversamente relacionados: una mayor longitud de onda -y por tanto, una menor frecuencia- tiene asociada una menor energía de la radiación.</p>
+</div>
+<div class="section" id="el-espectro-electromagnetico">
+<h3>El espectro electromagnético<a class="headerlink" href="#el-espectro-electromagnetico" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>De lo mencionado hasta ahora se deduce que puede definirse cualquier tipo de energía radiante en función de su longitud de onda o frecuencia. Aunque la sucesión de valores de longitud de onda es continua, suelen establecerse una serie de bandas en donde la radiación electromagnética manifiesta un comportamiento similar. La organización de estas bandas de longitudes de onda o frecuencia se denomina espectro electromagnético, y comprende desde las longitudes de onda más cortas (rayos gamma, rayos X), hasta las Kilométricas.</p>
+<p>En la siguiente imagen se muestra un esquema del espectro electromagnético y sus principales regiones de interés:</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/tele10.png"><img alt="_images/tele10.png" src="_images/tele10.png" style="width: 500pt;" /></a>
+<p class="caption">Espectro electromagnético y sus principales regiones de interés. Fuente: Wikipedia</p>
+</div>
+</div>
+<div class="section" id="la-firma-espectral">
+<h3>La firma espectral<a class="headerlink" href="#la-firma-espectral" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>La firma espectral es el conjunto de reflectancias en las distintas longitudes de onda que presenta un objeto o material dado. Dicho de otro modo, la firma espectral es la &#8216;huella dactilar&#8217; que caracteriza cada objeto, y que deriva directamente de sus propiedades y de cómo éstas influyen en la forma en que dicho objeto refleja la radiación incidente.</p>
+<p>Es gracias a la información que proporcionan las firmas espectrales que es posible identificar en una imagen de satélite la naturaleza de los objetos.</p>
+<p>Las firmas espectrales son a menudo representadas gráficamente en un eje de coordenadas, donde la longitud de onda está en el eje de las abscisas, y la reflectancia en el eje de las ordenadas.</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/tele11.png"><img alt="_images/tele11.png" src="_images/tele11.png" style="width: 400pt;" /></a>
+<p class="caption">Signaturas espectrales típicas de distintas cubiertas. Fuente: E. Chuvieco</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Nota</p>
+<p>Firma espectral con GRASS</p>
+<p class="last">Utilizando <strong>i.spectral</strong> de GRASS podéis obtener la firma espectral de una cubierta concreta.</p>
+</div>
+</div>
+</div>
+<div class="section" id="descarga-de-imagenes-satelite">
+<h2><a class="toc-backref" href="#id4">Descarga de imágenes satélite</a><a class="headerlink" href="#descarga-de-imagenes-satelite" title="Enlazar permanentemente con este título">¶</a></h2>
+<p><strong>Earth Explorer</strong>. Portal para realizar consultas y adquirir imágenes de satélite, fotografías aéreas y productos cartográficos del archivo.
+<a class="reference external" href="http://earthexplorer.usgs.gov/">http://earthexplorer.usgs.gov/</a></p>
+<p><strong>GLOVIS</strong>, visualizador de imágenes del servicio geológico de los Estados Unidos cuenta con imágenes de varios satélites.
+<a class="reference external" href="http://glovis.usgs.gov/">http://glovis.usgs.gov/</a></p>
+<p><strong>US Geological Sourvey</strong>, EROS Data Center, organismo que mantiene una base de datos sobre imágenes del programa Landsat.
+<a class="reference external" href="http://eros.usgs.gov/">http://eros.usgs.gov/</a></p>
+</div>
+<div class="section" id="el-programa-landsat">
+<h2><a class="toc-backref" href="#id5">El programa Landsat</a><a class="headerlink" href="#el-programa-landsat" title="Enlazar permanentemente con este título">¶</a></h2>
+<p>Vamos a desarrollar el taller utilizando imágenes del satélite <strong>Landsat</strong>.</p>
+<p>Desde que a finales de la década de los 60 la agencia espacial norteamericana diseñó el primer proyecto dedicado exclusivamente a la observación de los recursos terrestres, la familia Landsat ha constituido el proyecto más fructífero de teledetección espacial desarrollado hasta el momento.</p>
+<p>La buena resolución de sus sensores, el carácter global y periódico de la observación que realizan y la buena comercialización, explican su profuso empleo por expertos de muy variados campos en todo el mundo.</p>
+<p>Con el <strong>Landsat 8</strong> (cuyo nombre técnico es LCDM &#8216;Landsat Data Continuity Mission&#8217;) se ha dado continuidad al programa más largo de la historia sobre información del planeta.</p>
+<div class="section" id="el-sensor-oli-operational-land-imager">
+<h3>El sensor OLI (Operational Land Imager)<a class="headerlink" href="#el-sensor-oli-operational-land-imager" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>A bordo del Landsat 8, se encuentra el sensor OLI, puesto en órbita en Febrero del 2013. Las bandas espectrales capturadas por este sensor son muy parecidas a las del sensor ETM+ (a bordo del Landsat 7), aunqué se han añadido dos de nuevas: un nuevo <strong>canal en azul visible</strong> (banda 1) diseñado específicamente para observar la calidad del agua en lagos someros y zonas costeras, así como para detectar aerosoles, y otro <strong>canal en el infrarrojo</strong> (banda 9) para determinar la presencia de nubes -fundamentalmente cirrus-.</p>
+<p>Asimismo, junto cada escena del Landsat 8 se incluye también una banda de valoración de calidad (<em>Quality Assurance band</em>), que ofrece información respecto anomalías en la toma de datos por problemas en el instrumental o la presencia de elementos como nubes, agua y nieve.</p>
+</div>
+<div class="section" id="el-sensor-tirs-thermal-infrarred-sensor">
+<h3>El sensor TIRS (Thermal Infrarred Sensor)<a class="headerlink" href="#el-sensor-tirs-thermal-infrarred-sensor" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>El sensor TIRS capta información acerca la temperatura de la superficie terrestre a través de dos bandas del infrarroje térmico (banda 10 y banda 11). Permite distinguir entre la temperatura de la superficie terrestre y la temperatura atmosférica. Tienen una resolución de 100 mts.</p>
+</div>
+<div class="section" id="las-bandas-del-satelite-landsat-8">
+<h3>Las bandas del satélite Landsat 8<a class="headerlink" href="#las-bandas-del-satelite-landsat-8" title="Enlazar permanentemente con este título">¶</a></h3>
+<table border="1" class="docutils">
+<colgroup>
+<col width="13%" />
+<col width="45%" />
+<col width="23%" />
+<col width="19%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Sensor</th>
+<th class="head">Band Number</th>
+<th class="head">Amplitud</th>
+<th class="head">Resolución</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Oli</td>
+<td><ol class="first last arabic simple">
+<li>Coastal aerosol</li>
+</ol>
+</td>
+<td>0,43-0,45μm</td>
+<td>30m</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td><ol class="first last arabic simple" start="2">
+<li>Blue</li>
+</ol>
+</td>
+<td>0,45-0,51μm</td>
+<td>30m</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td><ol class="first last arabic simple" start="3">
+<li>Green</li>
+</ol>
+</td>
+<td>0,53-0,59μm</td>
+<td>30m</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td><ol class="first last arabic simple" start="4">
+<li>Red</li>
+</ol>
+</td>
+<td>0,64-0,67μm</td>
+<td>30m</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td><ol class="first last arabic simple" start="5">
+<li>Near Infrared (NIR)</li>
+</ol>
+</td>
+<td>0,85-0,88μm</td>
+<td>30m</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td><ol class="first last arabic simple" start="6">
+<li>SWIR 1</li>
+</ol>
+</td>
+<td>1,57-1,65μm</td>
+<td>30m</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td><ol class="first last arabic simple" start="7">
+<li>SWIR 2</li>
+</ol>
+</td>
+<td>2,11-2,29μm</td>
+<td>30m</td>
+</tr>
+<tr class="row-odd"><td>&nbsp;</td>
+<td><ol class="first last arabic simple" start="8">
+<li>Panchromatic</li>
+</ol>
+</td>
+<td>0,50-0,68μm</td>
+<td>30m</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td><ol class="first last arabic simple" start="9">
+<li>Cirrus</li>
+</ol>
+</td>
+<td>1,36-1,38μm</td>
+<td>30m</td>
+</tr>
+<tr class="row-odd"><td>TIRS</td>
+<td><ol class="first last arabic simple" start="10">
+<li>Thermal Infrarred 1</li>
+</ol>
+</td>
+<td>10,6-11,9μm</td>
+<td>100m</td>
+</tr>
+<tr class="row-even"><td>&nbsp;</td>
+<td><ol class="first last arabic simple" start="11">
+<li>Thermal Infrarred 2</li>
+</ol>
+</td>
+<td>11,5-12,51μm</td>
+<td>100m</td>
+</tr>
+</tbody>
+</table>
+<p>Comparativa longitud de onda de las bandas del Landsat 8 y Landsat 7:</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/tele12.jpg"><img alt="_images/tele12.jpg" src="_images/tele12.jpg" style="width: 600pt;" /></a>
+</div>
+</div>
+<div class="section" id="combinacion-de-bandas">
+<h3>Combinación de bandas<a class="headerlink" href="#combinacion-de-bandas" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>Las bandas multiespectrales de una imagen de satélite pueden visualizarse mediante distintas composiciones en color. Basta por ello aplicar cada uno de los tres colores primarios (rojo, verde y azul) a una banda distinta de la imagen, seleccionada con el criterio y el orden que se estime más oportuno.
+El proceso permite visualizar simultáneamente, imágenes de distintas regiones del espectro, lo que facilita la delimitación visual de algunas cubiertas. La elección de las bandas para realizar la composición, y el orden de los colores destinados a cada una, dependen del sensor sobre el que se trabaje y de la aplicación última del proyecto.</p>
+<p>Encontraréis algunas combinaciones posibles para Landsat 8 en: <a class="reference external" href="http://landsat.usgs.gov/L8_band_combos.php">http://landsat.usgs.gov/L8_band_combos.php</a></p>
+<div class="admonition note">
+<p class="first admonition-title">Nota</p>
+<p>Combinación de bandas con GRASS</p>
+<p class="last">Utilizad <strong>r.composite</strong> o <strong>d.rgb</strong> para realizar algunas combinaciones de bandas.</p>
+</div>
+</div>
+</div>
+<div class="section" id="calculo-de-la-temperatura-terrestre-lst-utilizando-las-bandas-del-tirs">
+<h2><a class="toc-backref" href="#id6">Cálculo de la temperatura terrestre (LST) utilizando las bandas del TIRS</a><a class="headerlink" href="#calculo-de-la-temperatura-terrestre-lst-utilizando-las-bandas-del-tirs" title="Enlazar permanentemente con este título">¶</a></h2>
+<div class="section" id="split-window-algorithm">
+<h3>Split-window algorithm<a class="headerlink" href="#split-window-algorithm" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>Para el cálculo de la temperatura de la superficie, se utilizará el algoritmo Split-Window (SW). Se trata del algoritmo mas utilizado para el cálculo de LST debido a su simplicidad y robustez.</p>
+<p>Este algoritmo se basa en el hecho que la radiación absorbida por la atmósfera es proporcional a la diferencia de brillo entre las mediciones simultáneas en dos longitudes de onda diferentes, correspondientes a las dos bandas del sensor TIRS.</p>
+<p>LST = TB<sub>10</sub>+ C<sub>1</sub>(TB<sub>10</sub>-TB<sub>11</sub>) + C<sub>2</sub>(TB<sub>10</sub>-TB<sub>11</sub>)2+ C<sub>0</sub>+(C<sub>3</sub>+C<sub>4</sub>W) (1-ε) + (C<sub>5</sub>+C<sub>6</sub>W) ∆ ε</p>
+<p>donde:</p>
+<p>LST - Land Surface Temperature (Kelvin)</p>
+<p>C<sub>0</sub> to  C<sub>6</sub>- Valores del coeficiente para SW (Skokovic et al, 2014; Sobrino et al, 1996; Shaouhua Zhao et al, 2009)</p>
+<table border="1" class="docutils">
+<colgroup>
+<col width="67%" />
+<col width="33%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Constant</th>
+<th class="head">Value</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>C<sub>0</sub></td>
+<td>-0.268</td>
+</tr>
+<tr class="row-odd"><td>C<sub>1</sub></td>
+<td>1.378</td>
+</tr>
+<tr class="row-even"><td>C<sub>2</sub></td>
+<td>0.183</td>
+</tr>
+<tr class="row-odd"><td>C<sub>3</sub></td>
+<td>54.300</td>
+</tr>
+<tr class="row-even"><td>C<sub>4</sub></td>
+<td>-2.238</td>
+</tr>
+<tr class="row-odd"><td>C<sub>5</sub></td>
+<td>-129.2</td>
+</tr>
+<tr class="row-even"><td>C<sub>6</sub></td>
+<td>16.400</td>
+</tr>
+</tbody>
+</table>
+<p>TB<sub>10</sub>y TB<sub>11</sub>- temperatura de brillo de la banda 10 y 11 (K)</p>
+<p>∆ - valor medio LSE (Land Surface Emissivity) de las bandas del TIR</p>
+<p>W - contenido de vapor de agua en la atmósfera</p>
+<p>∆ ε - Diferencia en LSE</p>
+<div class="admonition seealso">
+<p class="first admonition-title">Ver también</p>
+<p class="last"><strong>Estimation of Land Surface Temperature of Dindigul district using Landsat 8 Data</strong> (2014). Rajeshwari A, Mani N D. International Journal of Research in Engineering and Technology.</p>
+</div>
+</div>
+<div class="section" id="convertir-los-nd-a-valores-de-radiancia-toa-top-of-athmosphere">
+<h3>Convertir los ND a valores de radiancia (TOA - Top of athmosphere)<a class="headerlink" href="#convertir-los-nd-a-valores-de-radiancia-toa-top-of-athmosphere" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>A partir de los datos medidos por el sensor, puede obtenerse la <strong>energía reflejada</strong>, ya que la radiancia espectral medida por éste es consecuencia de la reflexión de la radiación electromagnética en las cubiertas. Esta reflexión se codifica con un valor numérico, que se denomina <strong>ND</strong>, de acuerdo a los coeficientes de calibración específicos para cada sensor. Dada que estos coeficientes son conocidos, puede realizarse el proceso inverso, obteniendo así los valores de <strong>radiancia</strong> espectral detectado por el sensor a partir de los ND.</p>
+<p>Para aplicar la fórmula del SW <em>algorithm</em>, es imprescindible conocer estos valores de radiancia.
+Las bandas del sensor OLI y TIRS pueden convertirse a valores de radiancia espectral del siguiente modo:</p>
+<p>Lλ = MLQcal + AL</p>
+<p>donde:</p>
+<p>Lλ = TOA spectral radiance (Watts/( m2 * srad * μm))</p>
+<p>ML = Band-specific multiplicative rescaling factor from the metadata (RADIANCE_MULT_BAND_x, where x is the band number)</p>
+<p>AL = Band-specific additive rescaling factor from the metadata (RADIANCE_ADD_BAND_x, where x is the band number)</p>
+<p>Qcal = Quantized and calibrated standard product pixel values (DN)</p>
+</div>
+<div class="section" id="conversion-a-valores-de-reflectividad-aparente-y-temperatura-de-brillo-a-la-altura-de-la-atmosfera-toa">
+<h3>Conversión a valores de reflectividad aparente y temperatura de Brillo a la altura de la atmósfera (TOA)<a class="headerlink" href="#conversion-a-valores-de-reflectividad-aparente-y-temperatura-de-brillo-a-la-altura-de-la-atmosfera-toa" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>A partir de los valores de radiancia, utilizando las bandas térmicas fácilmente se puede derivar la temperatura a la altura del sensor.
+Las bandas del TIRS se pueden convertir a temperatura de brillo utilizando las constantes que figuran en el archivo de metadatos. De este modo:</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/tele2.png"><img alt="_images/tele2.png" src="_images/tele2.png" style="width: 100pt;" /></a>
+</div>
+<p>donde:</p>
+<p>T = At-satellite brightness temperature (K)</p>
+<p>Lλ = TOA spectral radiance (Watts/( m2 * srad * μm))</p>
+<p>K1 = Band-specific thermal conversion constant from the metadata (K1_CONSTANT_BAND_x, where x is the band number, 10 or 11)</p>
+<p>K2 = Band-specific thermal conversion constant from the metadata (K2_CONSTANT_BAND_x, where x is the band number, 10 or 11)</p>
+<p>Abrid el archivo de metadatos de la imagen (.met) con un editor de texto, y comprobad que figuran todos los parámetros para el cálculo de la reflectividad: <strong>date, sun_elevation, product_date, gain</strong>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Nota</p>
+<p><strong>Ejercicio 1</strong></p>
+<blockquote>
+<div><p>Cread un nuevo location y mapset de GRASS, utilizando el mismo SR que la imagen Landsat 8.</p>
+<p>Utilizad el comando <strong>r.in.gdal</strong> para importar todas las bandas de la imagen.</p>
+<p>Utilizad <strong>i.landsat.toar</strong> de GRASS para obtener la temperatura de brillo a la altura de la atmósfera a partir de las bandas térmicas de la imagen.</p>
+<p>El método <strong>uncorrected at-sensor values</strong> de i.landsat.toar convierte los ND de la imagen a valores de radiancia, y posteriormente a reflectividad. Las bandas térmicas se convierten en primer lugar a valores de radiancia, y posteriormente a valores de temperatura a la altura del sensor, en grados Kelvin.</p>
+</div></blockquote>
+<p>i.landsat.toar input=PREFIJO DE LAS BANDAS output=PREFIJO DE SALIDA metfile=RUTA AL FICHERO DE METADATOS sensor=oli8</p>
+<blockquote class="last">
+<div><em>Si se añade</em> <strong>-r</strong>, <em>se obtendrán valores de radiancia en vez de valores de reflectividad</em>.</div></blockquote>
+</div>
+</div>
+<div class="section" id="correccion-atmosferica">
+<h3>Corrección atmosférica<a class="headerlink" href="#correccion-atmosferica" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>Este método, no obstante, <strong>no tiene en consideración las influencias atmosféricas</strong> y asume un <strong>terreno plano</strong> y una <strong>observación vertical</strong>, lo cual supone una simplificación de la realidad. De ahí que debamos hablar de reflectividad aparente, pues el valor calculado representa sólo la reflectividad captada por el sensor, pero no la realmente medible en la superficie.</p>
+<p>En cuanto a la <strong>observación vertical</strong>, es asumible para la mayor parte de los sensores de interés ambiental (Landsat, IRS, MOS-MESSR...), pero debe considerarse cuando la adquisición no es vertical, como ocurre con el SPOT-HRV.</p>
+<p>Por otro lado, la influencia atmosférica no afecta por igual a los dos componentes del cálculo de la reflectividad (energía reflejada e incidente), ya que el espesor de la atmósfera que atraviesan es distinto. Además, hay que considerar que a la radiancia solar directa hay que añadir la difusa, procedente de otros objetos vecinos.
+Por ello, la radiancia que recibe el satélite no es la misma que la que sale del suelo, que es la que interesa, dado que pretendemos medir la reflectividad de la cubierta, no la influida por la atmósfera.</p>
+<p>Existen distintos procedimientos para abordar las influencias atmosféricas, y determinar la radiancia del suelo, no la que recibe el satélite.
+Desde GRASS, disponemos del módulo <strong>i.landsat.toar</strong> que permite aplicar el método de corrección <strong>DOS</strong> (Dark Object Substraction), y <strong>i.atcorr</strong>, para aplicar el método <strong>6S</strong> (Second Simulation of Satellite Signal in the Solar Spectrum).</p>
+<p>Por su sencillez, utilizaremos el método DOS, que consiste en suponer que el mínimo valor de ND debe corresponder a las zonas oscuras presentes en la imagen y que en ausencia de efecto atmosférico ese valor debería ser cero. Conforme a esta suposición, se deduce que las diferencias entre el cero y los valores mínimos de los histogramas de las distintas bandas afectadas se deben al incremento de la radiancia absorbida por el sensor como consecuencia de la radiación difusa de la atmósfera. El procedimiento de corrección consiste en restar de todos los ND de cada banda, el ND mínimo de ella, de modo que se haga coincidir con el cero del origen del histograma.</p>
+<p>Existen algunas variantes del método de corrección atmosférica DOS (DOS1, DOS2, DOS3 y DOS4)</p>
+<div class="admonition seealso">
+<p class="first admonition-title">Ver también</p>
+<p class="last"><strong>Classification and Change Detection Using Landsat TM Data: When and How to Correct Atmospheric Effects</strong> (2000). Remote Sensing Environment.</p>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Nota</p>
+<p><strong>Ejercicio 2</strong></p>
+<p>Aplicad el método de corrección atmosférica DOS1 a las bandas de la imagen Landsat 8, dejando por defecto los valores correspondientes a <strong>Percent of solar radiance</strong> y <strong>Minimum pixels to consider digital number as dark object</strong>.</p>
+<p>i.landsat.toar input=PREFIX output=PREFIX metfile=ARCHIVO MET method=dos1</p>
+<p class="last">El proceso puede demorarse algunos minutos.</p>
+</div>
+<p><a class="reference external" href="http://gis.stackexchange.com/questions/40531/how-to-determine-aerosol-model-value-for-i-atcorr-in-grass">http://gis.stackexchange.com/questions/40531/how-to-determine-aerosol-model-value-for-i-atcorr-in-grass</a></p>
+</div>
+<div class="section" id="calculo-de-valores-de-emisividad-de-la-superficie-terrestre">
+<h3>Cálculo de valores de emisividad de la superficie terrestre<a class="headerlink" href="#calculo-de-valores-de-emisividad-de-la-superficie-terrestre" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>Otro de los parámetros del <strong>SW algorithm</strong> que es necesario obtener, es el de la emissividad de la superficie terrestre.
+Para entender que es la <strong>emisividad</strong>, hay que hacer referencia previamente a la <strong>emitancia</strong>.</p>
+<div class="admonition note">
+<p class="first admonition-title">Nota</p>
+<p>Emitancia y Emisividad</p>
+<p>Se entiende por <strong>emitancia</strong> el total de energía radiada en todas las direcciones desde una unidad de área y por unidad de tiempo. Se mide en vatios por metro cuadrado.</p>
+<p class="last">La <strong>emisividad</strong> es la relación entre la emitancia de una superfície (M) y la que ofrecería un emisor perfecto, denominado cuerpo negro, a la misma temperatura.</p>
+</div>
+<p>A partir de Índice de Vegetación de Diferencia Normalizada <strong>(NDVI)</strong> es posible derivar el valor de emisividad de las cubiertas del suelo.</p>
+<div class="admonition seealso">
+<p class="first admonition-title">Ver también</p>
+<p class="last"><strong>Mapping Land Surface Emissivity from NDVI: Application to European, African, and South American Areas</strong> (1996). Enric Valor and Vicente Caselles. Elsevier Science Inc.</p>
+</div>
+<p><strong>El índice de Vegetación de Diferencia Normalizada</strong></p>
+<p>El Índice de Vegetación de Diferencia Normalizada, también conocido como NDVI por sus siglas en inglés, es uno de los índices más importantes y más ampliamente utilizados.</p>
+<p>La fórmula para la obtención de este índice es la siguiente:</p>
+<p><strong>NDVI = (IR – R) / (IR + R)</strong></p>
+<p>donde R e IR son las reflectancias correspondientes al rojo (Banda 4) e infrarrojo (Banda 5) respectivamente.</p>
+<p>Los valores resultantes de este índice se encuentran dentro del intervalo (-1,1), indicando los valores altos la presencia de vegetación.</p>
+<p>(NDVI &lt; 0), correspondientes a agua o cubiertas artificiales</p>
+<p>(0 &lt; NDVI &lt; 0,2), correspondientes a suelo desnudo o vegetación muerta</p>
+<p>(0,2 &lt; NDVI &lt; 0,4), correspondientes a vegetación dispersa o poco vigorosa</p>
+<p>(0,4 &lt; NDVI &lt; 0,6), correspondientes a vegetación abundante y vigorosa</p>
+<p>(NDVI &gt; 0,6), correspondientes a vegetación muy densa y vigorosa,</p>
+<div class="admonition note">
+<p class="first admonition-title">Nota</p>
+<p><strong>Ejercicio 3</strong></p>
+<p>Utilizad el comando de GRASS <strong>i.vi</strong> para el cálculo de índices de vegetación.Las bandas a utilizar serán las correspondientes al rojo (B4) y al infrarrojo (B5) corregidas atmosféricamente.</p>
+<p>i.vi red=B4 corregida atmosféricamente output=NDVI viname=ndvi nir=B5 corregida atmosféricamente</p>
+<p class="last">Visualizad el histograma de la imagen correspondiente al NDVI que habéis creado. Los valores debería estar entre el intervalo -1,1.</p>
+</div>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/tele3.png"><img alt="_images/tele3.png" src="_images/tele3.png" style="width: 350pt;" /></a>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Nota</p>
+<p><strong>Ejercicio 4</strong></p>
+<p>Aplicad una paleta de color específica para la representación de capas NDVI</p>
+<p class="last">r.colors map=NDVI color=ndvi</p>
+</div>
+<p><strong>Fractional Vegetation Cover (FVC)</strong>
+El FVC es un índice que permite estimar la fracción de superficie ocupada por vegetación, y se obtiene a partir del NDVI.
+Obtener el FVC es necesario para hallar los valores de LSE.</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/tele4.png"><img alt="_images/tele4.png" src="_images/tele4.png" style="width: 250pt;" /></a>
+</div>
+<div class="admonition note">
+<p class="first admonition-title">Nota</p>
+<p><strong>Ejercicio 5</strong></p>
+<p>Utilizad la calculadora raster de GRASS para obtener el FVC
+Podéis utilizar r.info para hallar los valores mínimo y máximo de la capa NDVI.</p>
+<p class="last">r.mapcalc &#8220;FVC = ((NDVI+NDVImin)/(NDVImax - NDVImin))^2&#8221;</p>
+</div>
+<p><strong>Land Surface Emissivity</strong></p>
+<p>Finalmente, podréis obtener los valores correspondientes a LSE para las bandas del sensor TIRS (Band 10 y Band 11), teniendo en consideración que:</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/tele5.png"><img alt="_images/tele5.png" src="_images/tele5.png" style="width: 150pt;" /></a>
+</div>
+<p>donde:</p>
+<div class="figure align-center">
+<a class="reference internal image-reference" href="_images/tele6.png"><img alt="_images/tele6.png" src="_images/tele6.png" style="width: 150pt;" /></a>
+</div>
+<table border="1" class="docutils">
+<colgroup>
+<col width="44%" />
+<col width="26%" />
+<col width="30%" />
+</colgroup>
+<thead valign="bottom">
+<tr class="row-odd"><th class="head">Emissivity</th>
+<th class="head">Band 10</th>
+<th class="head">Band 11</th>
+</tr>
+</thead>
+<tbody valign="top">
+<tr class="row-even"><td>Soil</td>
+<td>0.971</td>
+<td>0.977</td>
+</tr>
+<tr class="row-odd"><td>Vegetation</td>
+<td>0.987</td>
+<td>0.989</td>
+</tr>
+</tbody>
+</table>
+<p>Fuente: Skokovic et al, 2014; Sobrino et al, 1996; Shaouhua Zhao et al, 2009.</p>
+<div class="admonition note">
+<p class="first admonition-title">Nota</p>
+<p><strong>Ejercicio 6</strong></p>
+<p>Utilizad la calculadora raster de GRASS para obtener los valores LSE de las bandas 10 y 11.</p>
+<p>r.mapcalc &#8220;LSE_B10 = 0.971*(1-FVC)+0.987*FVC&#8221;</p>
+<p class="last">r.mapcalc &#8220;LSE_B11 = 0.977*(1-FVC)+0.989*FVC&#8221;</p>
+</div>
+</div>
+<div class="section" id="aplicacion-del-split-window-algorithm">
+<h3>Aplicación del Split-Window Algorithm<a class="headerlink" href="#aplicacion-del-split-window-algorithm" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>Recordad que el SW Algorithm que vamos a aplicar, es:</p>
+<p>LST = TB<sub>10</sub>+ C<sub>1</sub>(TB<sub>10</sub>-TB<sub>11</sub>) + C<sub>2</sub>(TB<sub>10</sub>-TB<sub>11</sub>)2+ C<sub>0</sub>+(C<sub>3</sub>+C<sub>4</sub>W) (1-ε) + (C<sub>5</sub>+C<sub>6</sub>W) ∆ ε</p>
+<p>En este momento, ya únicamente nos faltan los parámetros correspondientes a:</p>
+<p>∆ - valor medio LSE (Land Surface Emissivity) de las bandas del TIR = (LSE<sub>10</sub>+ LSE<sub>11</sub>) / 2</p>
+<p>∆ ε - Diferencia en LSE = LSE<sub>10</sub>- LSE<sub>11</sub></p>
+<div class="admonition note">
+<p class="first admonition-title">Nota</p>
+<p><strong>Ejercicio 7</strong></p>
+<p>Utilizad la calculadora ráster de GRASS para obtener los valores correspondientes a al <strong>valor medio LSE</strong> y a la <strong>diferencia en LSE</strong>.</p>
+<p class="last">El valor medio en contenido de agua puede obtenerse del sensor Modis:
+<a class="reference external" href="http://en.wikipedia.org/wiki/File:Atmospheric_Water_Vapor_Mean.2005.030.jpg">http://en.wikipedia.org/wiki/File:Atmospheric_Water_Vapor_Mean.2005.030.jpg</a></p>
+</div>
+<p>ref_B10+1.378*( ref_B10 - ref_B11)+0.183*( ref_B10 - ref_B11 ) ^2-0.268+ (54.300-2.238*0.013 )*(1- LSE_valorMedio)+(-129.20+16.40*0.013)* ( LSE_B10 - LSE_B11</p>
+</div>
+<div class="section" id="obtener-valores-en-oc">
+<h3>Obtener valores en ºC<a class="headerlink" href="#obtener-valores-en-oc" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>Los valores de temperatura que habéis obtenido, están en grados Kelvin.
+Para obtener los valores en ºC, recordad que <strong>0 Kelvin = -273.15 Centígrados</strong></p>
+</div>
+</div>
+<div class="section" id="python-y-grass">
+<h2><a class="toc-backref" href="#id7">Python y GRASS</a><a class="headerlink" href="#python-y-grass" title="Enlazar permanentemente con este título">¶</a></h2>
+<div class="section" id="descargar-codigo-de-los-ejercicios">
+<h3>Descargar código de los ejercicios<a class="headerlink" href="#descargar-codigo-de-los-ejercicios" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>Debéis de ejecutar el script &#8216;obtener_datos_taller.sh&#8217; que tenéis en el escritorio.</p>
+</div>
+<div class="section" id="pygrass-library-grass-script">
+<h3>Pygrass Library (grass.script)<a class="headerlink" href="#pygrass-library-grass-script" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>Pygrass es una API orientada al objeto para trabajar con GRASS, que permite a los programadores trabajar con GRASS de una forma mas fácil y natural con un lenguaje de script.</p>
+<p>Abrir grass70</p>
+<div class="highlight-python"><div class="highlight"><pre>$ grass70
+</pre></div>
+</div>
+<p>En la consola de GRASS</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">help</span><span class="p">(</span><span class="n">grass</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Nos muestra la ayuda y los módulos que dispone. El código de estos de encuentra en /usr/lib/grass70/etc/python/grass/script/</p>
+<p>Al ejecutar en la consola de GRASS, nos muestra la del módulo &#8216;grass.utils&#8217;.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">help</span><span class="p">(</span><span class="n">grass</span><span class="o">.</span><span class="n">utils</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Al ejecutar en la consola de GRASS, nos muestra la del módulo &#8216;grass.utils&#8217;.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">help</span><span class="p">(</span><span class="n">grass</span><span class="o">.</span><span class="n">utils</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>La consola nos permite escribir código y rutinas que ejecuten procesos y interactuar con la interfaz gráfica.</p>
+<p>En la consola de GRASS. Vemos como carga la capa LST en el árbol de capas.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">AddLayer</span><span class="p">(</span><span class="s">&#39;LST&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>En la consola de GRASS. Obtenemos la lista de imágenes que tenemos.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">grass</span><span class="o">.</span><span class="n">list_strings</span><span class="p">(</span><span class="s">&#39;raster&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>En la consola de GRASS. Obtenemos información acerca de la imagen &#8216;LST&#8217;.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">grass</span><span class="o">.</span><span class="n">raster</span><span class="o">.</span><span class="n">raster_info</span><span class="p">(</span><span class="s">&#39;LST&#39;</span><span class="p">)</span>
+</pre></div>
+</div>
+<p>Mas información en:</p>
+<p><a class="reference external" href="http://grass.osgeo.org/grass71/manuals/libpython/pygrass_index.html">http://grass.osgeo.org/grass71/manuals/libpython/pygrass_index.html</a></p>
+<p>Además de la consola de python de GRASS también podemos trabajar con GRASS desde scripts de python.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python nuestro_script.py
+</pre></div>
+</div>
+<p>Y que este ejecute cógigo que llame a los módulos de GRASS.</p>
+</div>
+<div class="section" id="variables-de-entorno">
+<h3>Variables de entorno<a class="headerlink" href="#variables-de-entorno" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>Antes de empezar a programar con python y GRASS desde scripts hay que definir y inicializar las variables de entorno y variables de GRASS así nuestros scripts de python puedan funcionar de forma correcta.</p>
+<div class="highlight-python"><div class="highlight"><pre>#!/bin/bash
+
+#http://grasswiki.osgeo.org/wiki/GRASS_and_Python
+#http://grass.osgeo.org/grass70/manuals/variables.html
+
+export GISBASE=/usr/lib/grass70
+export GRASS_VERSION=&quot;7.0.0&quot;
+
+GISRC=&quot;$HOME/.grassrc7&quot;
+
+export GISRC
+export GRASS_PYTHON=python
+
+export PATH=&quot;$GISBASE/bin:$GISBASE/scripts:$PATH&quot;
+export LD_LIBRARY_PATH=&quot;$GISBASE/lib&quot;
+export GRASS_LD_LIBRARY_PATH=&quot;$LD_LIBRARY_PATH&quot;
+export PYTHONPATH=&quot;$GISBASE/etc/python:$PYTHONPATH&quot;
+
+
+#Generamos el GISRCRC
+MYGISDBASE=$HOME/Documentos/grassdata
+MYLOC=catalunya
+MYMAPSET=taller
+echo &quot;GISDBASE: $MYGISDBASE&quot; &gt; &quot;$GISRC&quot;
+echo &quot;LOCATION_NAME: $MYLOC&quot; &gt;&gt; &quot;$GISRC&quot;
+echo &quot;MAPSET: $MYMAPSET&quot; &gt;&gt; &quot;$GISRC&quot;
+</pre></div>
+</div>
+<p><a class="reference external" href="http://grass.osgeo.org/grass70/manuals/variables.html">http://grass.osgeo.org/grass70/manuals/variables.html</a></p>
+<p>Ejecutar script que inicializa nuestras variables de entorno y de GRASS.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ source grass-env.sh
+</pre></div>
+</div>
+<p>Ejemplo que muestra las variables de entorno de GRASS.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="sd">&quot;&quot;&quot;Muestra las variables de entorno de GRASS&quot;&quot;&quot;</span>
+
+<span class="kn">import</span> <span class="nn">grass.script</span> <span class="kn">as</span> <span class="nn">grass</span>
+
+<span class="n">env</span> <span class="o">=</span> <span class="n">grass</span><span class="o">.</span><span class="n">gisenv</span><span class="p">()</span>
+
+<span class="k">print</span> <span class="n">env</span> 
+</pre></div>
+</div>
+<p>Para ejecutar el script</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python ejemplo_01_entorno.py
+</pre></div>
+</div>
+<p>Si os fijáis en el código, las variables de GRASS se almacenan en el archivo /home/user/.grassrc7</p>
+<div class="highlight-python"><div class="highlight"><pre>GISDBASE: /home/user/Documentos/grassdata
+LOCATION_NAME: catalunya
+MAPSET: taller
+</pre></div>
+</div>
+</div>
+<div class="section" id="python">
+<h3>python<a class="headerlink" href="#python" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>En la consola</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python
+</pre></div>
+</div>
+<p>Para importar la librería de GRASS</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">grass.script</span> <span class="kn">as</span> <span class="nn">grass</span>
+</pre></div>
+</div>
+<p>Ejemplo que muestra los límites del location.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="kn">import</span> <span class="nn">os</span>
+
+<span class="kn">import</span> <span class="nn">grass.script</span> <span class="kn">as</span> <span class="nn">grass</span>
+
+<span class="c">#Print region extent</span>
+<span class="n">r</span> <span class="o">=</span> <span class="n">grass</span><span class="o">.</span><span class="n">read_command</span><span class="p">(</span><span class="s">&quot;g.region&quot;</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="s">&#39;p&#39;</span> <span class="p">)</span>
+<span class="k">print</span> <span class="n">r</span>
+</pre></div>
+</div>
+<p>Para ejecutar el script</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python ejemplo02_location.py
+</pre></div>
+</div>
+</div>
+<div class="section" id="sintaxi">
+<h3>Sintaxi<a class="headerlink" href="#sintaxi" title="Enlazar permanentemente con este título">¶</a></h3>
+<p><a class="reference external" href="http://grass.osgeo.org/grass70/manuals/libpython/script_intro.html#syntax">http://grass.osgeo.org/grass70/manuals/libpython/script_intro.html#syntax</a></p>
+<p>Consola de bash o CMD de windows</p>
+<div class="highlight-python"><div class="highlight"><pre>r.info map=NDVI -g --verbose
+</pre></div>
+</div>
+<p>En python</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="n">grass</span><span class="o">.</span><span class="n">read_command</span><span class="p">(</span><span class="s">&#39;r.info&#39;</span><span class="p">,</span> <span class="nb">map</span><span class="o">=</span><span class="s">&#39;NDVI&#39;</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="s">&#39;g&#39;</span><span class="p">,</span> <span class="n">verbose</span><span class="o">=</span><span class="bp">True</span><span class="p">)</span>
+</pre></div>
+</div>
+<div class="section" id="id1">
+<h4>Sintaxi<a class="headerlink" href="#id1" title="Enlazar permanentemente con este título">¶</a></h4>
+<p>function_name(&#8216;module.name&#8217;, option1=value1, option2=..., flags=&#8217;flagletters&#8217;)</p>
+<p><strong>run_command()</strong></p>
+<p>Ejecutar una comanda y no esperar ninguna salida</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">grass</span><span class="o">.</span><span class="n">run_command</span><span class="p">(</span><span class="s">&#39;g.remove&#39;</span><span class="p">,</span> <span class="nb">type</span><span class="o">=</span><span class="s">&#39;raster&#39;</span><span class="p">,</span> <span class="n">name</span><span class="o">=</span><span class="s">&#39;raster1&#39;</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="s">&#39;f&#39;</span><span class="p">)</span>
+<span class="go">0</span>
+</pre></div>
+</div>
+<p><strong>read_command</strong></p>
+<p>Ejecutar una comanda y esperar una salida como texto.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">grass</span><span class="o">.</span><span class="n">read_command</span><span class="p">(</span><span class="s">&#39;g.region&#39;</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="s">&#39;p&#39;</span><span class="p">)</span>
+<span class="go">&#39;projection: 1 (UTM)\nzone:       31\ndatum:      wgs84\nellipsoid:  wgs84\nnorth:      4741215\nsouth:      4503885\nwest:       370485\neast:       603915\nnsres:      30\newres:      30\nrows:       7911\ncols:       7781\ncells:      61555491\n&#39;</span>
+</pre></div>
+</div>
+<p><strong>parse_command()</strong></p>
+<p>Nos devuelve el resultado en un diccionario.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="gp">&gt;&gt;&gt; </span><span class="n">grass</span><span class="o">.</span><span class="n">parse_command</span><span class="p">(</span><span class="s">&#39;g.region&#39;</span><span class="p">,</span> <span class="n">flags</span><span class="o">=</span><span class="s">&#39;p&#39;</span><span class="p">)</span>
+<span class="go">{&#39;ewres:      30&#39;: None, &#39;ellipsoid:  wgs84&#39;: None, &#39;nsres:      30&#39;: None, &#39;rows:       7911&#39;: None, &#39;north:      4741215&#39;: None, &#39;cells:      61555491&#39;: None, &#39;projection: 1 (UTM)&#39;: None, &#39;zone:       31&#39;: None, &#39;cols:       7781&#39;: None, &#39;west:       370485&#39;: None, &#39;datum:      wgs84&#39;: None, &#39;east:       603915&#39;: None, &#39;south:      4503885&#39;: None}</span>
+</pre></div>
+</div>
+</div>
+</div>
+<div class="section" id="ejercicios">
+<h3>Ejercicios<a class="headerlink" href="#ejercicios" title="Enlazar permanentemente con este título">¶</a></h3>
+<p>En la carpeta &#8216;/home/user/Documentos/taller_grass/workspace/ejercicios&#8217; tenéis los archivos que debéis de completar.</p>
+<ul class="simple">
+<li>ejercicios_00.py</li>
+<li>ejercicios_01.py</li>
+<li>ejercicios_02.py</li>
+<li>ejercicios_03.py</li>
+<li>ejercicios_04.py</li>
+<li>ejercicios_05.py</li>
+<li>ejercicios_06.py</li>
+<li>ejercicios_07.py</li>
+<li>ejercicios_08.py</li>
+</ul>
+<p>Los ejercicios son los mismos que habéis realizado con la interfaz gráfica de GRASS pero con una imagen distinta. En el ejercicio 08 obtendremos datos estadísticos de la imagen &#8216;LST&#8217; y &#8216;LST2&#8217; y los cruzaremos con la capa de &#8216;barrios&#8217; de Girona.</p>
+<p>Si todo funciona correctamente podemos ver los datos en un gráfico al ejecutar en la consola de bash.</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python ejercicios_limpiar.py
+</pre></div>
+</div>
+<p>Ejemplo que os indica que debéis de implementar el código del ejercicio.</p>
+<div class="highlight-python"><div class="highlight"><pre><span class="c">##EJERCICIO## ##EJECUTAR_COMANDO## ##OBTENER TEMPERATURA DE BRILLO## ##PARÁMETROS##</span>
+</pre></div>
+</div>
+<p>Antes de empezar debés de limpiar todo lo que habéis hecho menos la capa &#8216;LST&#8217; para ello tenéis el archivo &#8216;ejercicios_limpiar.py&#8217;</p>
+<p>En la consola de bash</p>
+<div class="highlight-python"><div class="highlight"><pre>$ python ejercicios_limpiar.py
+</pre></div>
+</div>
+</div>
+</div>
+</div>
+
+
+    </div>
+      
+  </div>
+</div>
+<footer class="footer">
+  <div class="container">
+    <p class="pull-right">
+      <a href="#">Back to top</a>
+      
+    </p>
+    <p>
+        &copy; Copyright 2015, Josep Sitjar i Alexandre Busquets.<br/>
+    </p>
+  </div>
+</footer>
+  </body>
+</html>
