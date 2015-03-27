@@ -24,8 +24,7 @@ print "Ejecutando %s" % __file__
 
 import grass.script as grass
 
-
-BARRIOS="/home/user/Documentos/datos/barrios/barrios.shp"
+BARRIOS="/home/user/Documentos/taller_grass/workspace/datos/barrios/barrios.shp"
 #http://grass.osgeo.org/grass70/manuals/v.rast.stats.html
 ##EJERCICIO## ##EJECUTAR_COMANDO## ##IMPORTAR ARCHIVO VECTORIAL## ##PARÁMETROS##
 grass.run_command('v.in.ogr', input=BARRIOS, output='BARRIOS')
