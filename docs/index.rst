@@ -3,22 +3,21 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
+:tocdepth: 2
 
-
-TALLER TELEDETECCIO
+====================
+TALLER TELEDETECCIÓN
 ====================
 
-GRASS, PYTHON...
-alex, pep
-divendres
+Instructor: Josep Sitjar, Alexandre Busquets (SIGTE – Universitat de Girona)
 
-Índice del taller
-=================
-1. Breve introducción a la teledetección
-2. ¿Qué módulos nos ofrece GRASS Gis para trabajar con imágenes de satélite?
-3. Correcciones atmosféricas de imagenes de satélite
-4. Cálculo de temperaturas a partir de imagenes de satélite
-5. Scripts de python y GRASS
+El taller se centrará fundamentalmente en descubrir las potencialidades de la teledetección como fuente de datos esencial en los SIG.
+Se hará una breve introducción al proceso de adquisición de imágenes de satélite en función de la plataforma (Landsat, Spot…) y de los sensores encargados de realizar la observación, así como de los principales aspectos a tener en cuenta al trabajar con estas imágenes. Mostraremos algunos de los principales portales disponibles para la descarga de imágenes de satélite.
+Son muchas las herramientas que ofrece el software GRASS GIS para el trabajo con imágenes de satélite, con lo que buena parte del taller se centrará en descubrir algunos de los principales módulos de este software y el flujo de trabajo para desarrollar un proyecto de teledetección: desde la visualización al análisis, pasando también por los correspondientes procesos de corrección.
+Finalmente, se desarrollarán algunos scripts en Python para el establecimiento de rutinas de análisis de los datos obtenidos.
+
+.. contents::
+   :depth: 2
  
 
 ¿Qué es la teledetección?
@@ -33,29 +32,111 @@ esta fuente de información (meteorología, oceanografía, geología, geografía
    :width: 450pt
 
 
+Fundamentos de la teledetección
+_______________________________
+
+.. figure:: img/tele8.png
+   :align:  center
+   :width: 250pt
+
+   Esquema de un sistema de teledetección. Fuente: V.Olaya. 
+
+a) **Fuente de radiación** (puede ser natural) o artificial. La primera de ellas es la forma más importante de teledetección, pues se deriva directamente de la luz solar, principal fuente de energía del plantea. El sol ilumina la superficie terrestre, que refleja esa energía en función del tipo de cubierta presente sobre ella. Este flujo reflejado se recoge por el sensor, que lo transmite posteriormente a las estaciones receptoras.
+
+
+b) **Objetos** que interaccionan con la radiación o la emiten. 
+
+
+c) **Atmósfera** por la que se desplaza la radiación, tanto desde la fuente hasta el objeto como desde el objeto hasta el receptor. La atmósfera también interactúa con la radiación, introduciendo igualmente perturbaciones en ella.
+
+
+d) **Receptor** que recoge la radiación una vez ésta ha sido perturbada o emitida por los objetos. El receptor va a generar como producto final una imagen en cuyas celdas se va a contener un valor que indica la intensidad de la radiación. Estos valores son valores enteros que indican el nivel de dicha radiación entre una escala definida (habitualmente valores entre 1 y 256), y se conocen dentro del ámbito de la teledetección como Niveles Digitales
+
+La radiación electromagnética
+_______________________________
+
+La radiación electromagnética es una de las cuatro fuerzas fundamentales en la naturaleza, y deriva del campo electromagnético. Un cuerpo con carga, en reposo o que se mueve en el espacio, genera un campo electromagnético definido mediante dos vectores: el campo electrónico y el campo magnético. Así, se define la **radiación electromagnética** como una **combinación de campos eléctricos y magnéticos oscilantes y perpendiculares entre sí que se propagan a través del espacio transportando energía de un lado a otro**. 
+
+.. figure:: img/tele9.png
+   :align:  center
+   :width: 300pt
+
+   Esquema de onda electromagnética. Fuente: E. Chuvieco
+
+
+Según la teoría ondulatoria, las ondas electromagnéticas se desplaza a la velocidad de la luz siguiendo un modelo armónico y continuo, y se pueden describir por dos elementos: **longitud de onda**  (λ)  y **frecuencia** (F). La primera hace referencia a la distancia entre dos tipos sucesivos de onda, mientras que la frecuencia designa el número de ciclos pasando por un punto fijo en una unidad de tiempo. Ambos elementos están inversamente relacionados: una mayor longitud de onda -y por tanto, una menor frecuencia- tiene asociada una menor energía de la radiación. 
+
+El espectro electromagnético
+____________________________
+
+De lo mencionado hasta ahora se deduce que puede definirse cualquier tipo de energía radiante en función de su longitud de onda o frecuencia. Aunque la sucesión de valores de longitud de onda es continua, suelen establecerse una serie de bandas en donde la radiación electromagnética manifiesta un comportamiento similar. La organización de estas bandas de longitudes de onda o frecuencia se denomina espectro electromagnético, y comprende desde las longitudes de onda más cortas (rayos gamma, rayos X), hasta las Kilométricas. 
+
+En la siguiente imagen se muestra un esquema del espectro electromagnético y sus principales regiones de interés:
+
+.. figure:: img/tele10.png
+   :align:  center
+   :width: 500pt
+
+   Espectro electromagnético y sus principales regiones de interés. Fuente: Wikipedia
+
+La firma espectral 
+____________________________
+
+La firma espectral es el conjunto de reflectancias en las distintas longitudes de onda que presenta un objeto o material dado. Dicho de otro modo, la firma espectral es la 'huella dactilar' que caracteriza cada objeto, y que deriva directamente de sus propiedades y de cómo éstas influyen en la forma en que dicho objeto refleja la radiación incidente.
+
+Es gracias a la información que proporcionan las firmas espectrales que es posible identificar en una imagen de satélite la naturaleza de los objetos.
+
+Las firmas espectrales son a menudo representadas gráficamente en un eje de coordenadas, donde la longitud de onda está en el eje de las abscisas, y la reflectancia en el eje de las ordenadas. 
+
+.. figure:: img/tele11.png
+   :align:  center
+   :width: 400pt
+
+   Signaturas espectrales típicas de distintas cubiertas. Fuente: E. Chuvieco
+
+
+.. note:: Firma espectral con GRASS
+
+   Utilizando **i.spectral** de GRASS podéis obtener la firma espectral de una cubierta concreta.
+
+
+
+Descarga de imágenes satélite
+=============================
+
+
+**Earth Explorer**. Portal para realizar consultas y adquirir imágenes de satélite, fotografías aéreas y productos cartográficos del archivo.
+http://earthexplorer.usgs.gov/
+
+**GLOVIS**, visualizador de imágenes del servicio geológico de los Estados Unidos cuenta con imágenes de varios satélites.
+http://glovis.usgs.gov/
+
+**US Geological Sourvey**, EROS Data Center, organismo que mantiene una base de datos sobre imágenes del programa Landsat.
+http://eros.usgs.gov/
+
 
 El programa Landsat
 ====================
-Vamos a desarrollar el taller utilizando imagenes del satélite **Landsat**. 
+Vamos a desarrollar el taller utilizando imágenes del satélite **Landsat**. 
 
-Desde que a finales de la década de los 60 la agencia espacial norteamericana diseñó el primer proyecto dedicado exclusivamente a la observación de los recursos terrestres, la família Landsat ha constituido el proyecto más fructífero de teledetección espacial desarrollado hasta el momento. 
+Desde que a finales de la década de los 60 la agencia espacial norteamericana diseñó el primer proyecto dedicado exclusivamente a la observación de los recursos terrestres, la familia Landsat ha constituido el proyecto más fructífero de teledetección espacial desarrollado hasta el momento. 
 
-La buena resolución de sus sensores, el carácter global y periódico de la observación que realizan y la buena comercialización, explican su profuso empleo por experts de muy variados campos en todo el mundo. 
+La buena resolución de sus sensores, el carácter global y periódico de la observación que realizan y la buena comercialización, explican su profuso empleo por expertos de muy variados campos en todo el mundo. 
 
-Con el **Landsat 8** (cuyo nombre técnico es LCDM 'Landsat Data Continuity Mission') se ha dado continuidad al programa más largo de la historia sobre información del planteta. 
+Con el **Landsat 8** (cuyo nombre técnico es LCDM 'Landsat Data Continuity Mission') se ha dado continuidad al programa más largo de la historia sobre información del planeta. 
 
 
 El sensor OLI (Operational Land Imager)
 _______________________________________
 
-A bordo del Landsat 8, se encuentra el sensor OLI, puesto en órbita en Febrero del 2013. Las bandas espectrales capturadas por este sensor son muy parecidas a las del sensor ETM+ (a bordo del Landsat 7), aunqué se han añadido dos de nuevas: un nuevo **canal en azul visible** (banda 1) disseñado especificamente para observar la calidad del agua en lagos someros y zonas costeras, así como para detectar aerosoles, y otro **canal en el infrarrojo** (banda 9) para determinar la presencia de nubes -fundamentalmente cirrus-. 
+A bordo del Landsat 8, se encuentra el sensor OLI, puesto en órbita en Febrero del 2013. Las bandas espectrales capturadas por este sensor son muy parecidas a las del sensor ETM+ (a bordo del Landsat 7), aunqué se han añadido dos de nuevas: un nuevo **canal en azul visible** (banda 1) diseñado específicamente para observar la calidad del agua en lagos someros y zonas costeras, así como para detectar aerosoles, y otro **canal en el infrarrojo** (banda 9) para determinar la presencia de nubes -fundamentalmente cirrus-. 
 
-Asimismo, junto a acada escena del Landsat 8 se incluye también una banda de valoración de calidad (*Quality Assurance band*), que ofrece información respecto anomalías en la toma de datos por problemas en el instrumental o la presencia de elementos como nubes, agua y nieve. 
+Asimismo, junto cada escena del Landsat 8 se incluye también una banda de valoración de calidad (*Quality Assurance band*), que ofrece información respecto anomalías en la toma de datos por problemas en el instrumental o la presencia de elementos como nubes, agua y nieve. 
 
 El sensor TIRS (Thermal Infrarred Sensor)
 _________________________________________
 
-El sensor TIRS capta información acerca la temperatura de la superficie terrestre a través de dos bandas del infrarroje térmico (banda 10 y banda 11). Permite distinguir entre la temperatura de la superficie terrestre y la temperatura atmosfércia. Tienen una resolución de 100 mts. 
+El sensor TIRS capta información acerca la temperatura de la superficie terrestre a través de dos bandas del infrarroje térmico (banda 10 y banda 11). Permite distinguir entre la temperatura de la superficie terrestre y la temperatura atmosférica. Tienen una resolución de 100 mts. 
 
 
 Las bandas del satélite Landsat 8
@@ -88,7 +169,24 @@ _________________________________
 |       |11. Thermal Infrarred 2 |11,5-12,51μm|100m      |  
 +-------+------------------------+------------+----------+
 
+Comparativa longitud de onda de las bandas del Landsat 8 y Landsat 7:
 
+.. figure:: img/tele12.jpg
+   :align:  center
+   :width: 600pt
+
+
+Combinación de bandas
+____________________________
+
+Las bandas multiespectrales de una imagen de satélite pueden visualizarse mediante distintas composiciones en color. Basta por ello aplicar cada uno de los tres colores primarios (rojo, verde y azul) a una banda distinta de la imagen, seleccionada con el criterio y el orden que se estime más oportuno. 
+El proceso permite visualizar simultáneamente, imágenes de distintas regiones del espectro, lo que facilita la delimitación visual de algunas cubiertas. La elección de las bandas para realizar la composición, y el orden de los colores destinados a cada una, dependen del sensor sobre el que se trabaje y de la aplicación última del proyecto.
+
+Encontraréis algunas combinaciones posibles para Landsat 8 en: http://landsat.usgs.gov/L8_band_combos.php
+
+.. note:: Combinación de bandas con GRASS
+
+   Utilizad **r.composite** o **d.rgb** para realizar algunas combinaciones de bandas. 
 
 
 Cálculo de la temperatura terrestre (LST) utilizando las bandas del TIRS
@@ -99,9 +197,9 @@ Cálculo de la temperatura terrestre (LST) utilizando las bandas del TIRS
 Split-window algorithm 
 _______________________
 
-Para el cálculo de la temperatura de la superfície, se utilizará el algoritmo Split-Window (SW). Se trata del algoritmo maś utilizado para el cálculo de LST debido a su simplicidad y robustez. 
+Para el cálculo de la temperatura de la superficie, se utilizará el algoritmo Split-Window (SW). Se trata del algoritmo mas utilizado para el cálculo de LST debido a su simplicidad y robustez. 
 
-Este algoritmo se basa en el hecho que la radiación absorvida por la atmósfera es proporcional a la diferencia de brillo entre las mediciones simultáneas en dos lonigudes de onda diferentes, correspondientes a las dos bandas del sensor TIRS. 
+Este algoritmo se basa en el hecho que la radiación absorbida por la atmósfera es proporcional a la diferencia de brillo entre las mediciones simultáneas en dos longitudes de onda diferentes, correspondientes a las dos bandas del sensor TIRS. 
 
 
 LST = TB\ :sub:`10`\ + C\ :sub:`1`\ (TB\ :sub:`10`\-TB\ :sub:`11`\ ) + C\ :sub:`2`\ (TB\ :sub:`10`\ -TB\ :sub:`11`\ )2+ C\ :sub:`0`\ +(C\ :sub:`3`\ +C\ :sub:`4`\ W) (1-ε) + (C\ :sub:`5`\ +C\ :sub:`6`\ W) ∆ ε
@@ -205,7 +303,7 @@ Abrid el archivo de metadatos de la imagen (.met) con un editor de texto, y comp
    El método **uncorrected at-sensor values** de i.landsat.toar convierte los ND de la imagen a valores de radiancia, y posteriormente a reflectividad. Las bandas térmicas se convierten en primer lugar a valores de radiancia, y posteriormente a valores de temperatura a la altura del sensor, en grados Kelvin. 
    
 
-  i.landsat.toar input=PREFIJO DE LAS BANDAS output=PREFIJO DE SALIDA metafile=RUTA AL FICHERO DE METADATOS sensor=oli8
+  i.landsat.toar input=PREFIJO DE LAS BANDAS output=PREFIJO DE SALIDA metfile=RUTA AL FICHERO DE METADATOS sensor=oli8
    
    *Si se añade* **-r**, *se obtendrán valores de radiancia en vez de valores de reflectividad*. 
 
@@ -218,12 +316,12 @@ Este método, no obstante, **no tiene en consideración las influencias atmosfé
 En cuanto a la **observación vertical**, es asumible para la mayor parte de los sensores de interés ambiental (Landsat, IRS, MOS-MESSR...), pero debe considerarse cuando la adquisición no es vertical, como ocurre con el SPOT-HRV.
 
 Por otro lado, la influencia atmosférica no afecta por igual a los dos componentes del cálculo de la reflectividad (energía reflejada e incidente), ya que el espesor de la atmósfera que atraviesan es distinto. Además, hay que considerar que a la radiancia solar directa hay que añadir la difusa, procedente de otros objetos vecinos. 
-Por ello, la radiancia que recibe el satélite no es la misma que la qque sale del suelo, que es la que interesa, dado que pretendemos medir la reflectividad de la cubierta, no la influida por la atmósfera.
+Por ello, la radiancia que recibe el satélite no es la misma que la que sale del suelo, que es la que interesa, dado que pretendemos medir la reflectividad de la cubierta, no la influida por la atmósfera.
 
 Existen distintos procedimientos para abordar las influencias atmosféricas, y determinar la radiancia del suelo, no la que recibe el satélite. 
 Desde GRASS, disponemos del módulo **i.landsat.toar** que permite aplicar el método de corrección **DOS** (Dark Object Substraction), y **i.atcorr**, para aplicar el método **6S** (Second Simulation of Satellite Signal in the Solar Spectrum).  
 
-Por su sencillez, utilizaremos el método DOS, que consiste en suponer que el mínimo valor de ND debe corresponder a las zonas oscuras presentes en la imagen y que en ausencia de efecto atmosférico ese valor debería ser cero. Conforme a esta suposición, se deduce que las diferencias entre el cero y los valores mínimos de los histogramas de las distintas bandas afectadas se deben al incremento de la radiancia absorvida por el sensor como consecuencia de la radiación difusa de la atmósfera. El procedimiento de corrección consiste en restar de todos los ND de cada banda, el ND mínimo de ella, de modo que se haga coincidir con el cero del origen del histograma.  
+Por su sencillez, utilizaremos el método DOS, que consiste en suponer que el mínimo valor de ND debe corresponder a las zonas oscuras presentes en la imagen y que en ausencia de efecto atmosférico ese valor debería ser cero. Conforme a esta suposición, se deduce que las diferencias entre el cero y los valores mínimos de los histogramas de las distintas bandas afectadas se deben al incremento de la radiancia absorbida por el sensor como consecuencia de la radiación difusa de la atmósfera. El procedimiento de corrección consiste en restar de todos los ND de cada banda, el ND mínimo de ella, de modo que se haga coincidir con el cero del origen del histograma.  
 
 Existen algunas variantes del método de corrección atmosférica DOS (DOS1, DOS2, DOS3 y DOS4)
 
@@ -240,10 +338,10 @@ Existen algunas variantes del método de corrección atmosférica DOS (DOS1, DOS
 
 http://gis.stackexchange.com/questions/40531/how-to-determine-aerosol-model-value-for-i-atcorr-in-grass
 
-Cálculo de valores de emisividad de la superfície terrestre
+Cálculo de valores de emisividad de la superficie terrestre
 ___________________________________________________________
 
-Otro de los parámetros del **SW algorithm** que es necesario obtener, es el de la emissividad de la superfície terrestre. 
+Otro de los parámetros del **SW algorithm** que es necesario obtener, es el de la emissividad de la superficie terrestre. 
 Para entender que es la **emisividad**, hay que hacer referencia previamente a la **emitancia**.
 
 .. note:: Emitancia y Emisividad
@@ -286,7 +384,7 @@ Los valores resultantes de este índice se encuentran dentro del intervalo (-1,1
 
    Utilizad el comando de GRASS **i.vi** para el cálculo de índices de vegetación.Las bandas a utilizar serán las correspondientes al rojo (B4) y al infrarrojo (B5) corregidas atmosféricamente. 
 
-   i.vi red=B4 corregida atmosfericamente output=NDVI viname=ndvi nir=B5 corregida atmosféricamente
+   i.vi red=B4 corregida atmosféricamente output=NDVI viname=ndvi nir=B5 corregida atmosféricamente
 
    Visualizad el histograma de la imagen correspondiente al NDVI que habéis creado. Los valores debería estar entre el intervalo -1,1.
 
@@ -301,7 +399,7 @@ Los valores resultantes de este índice se encuentran dentro del intervalo (-1,1
    r.colors map=NDVI color=ndvi
 
 **Fractional Vegetation Cover (FVC)**
-El FVC es un índice que permite estimar la fracción de superfície ocupada por vegetación, y se obtiene a partir del NDVI. 
+El FVC es un índice que permite estimar la fracción de superficie ocupada por vegetación, y se obtiene a partir del NDVI. 
 Obtener el FVC es necesario para hallar los valores de LSE. 
 
 .. figure:: img/tele4.png
@@ -338,6 +436,7 @@ donde:
 +------------+-------+--------+
 |Vegetation  |0.987  |0.989   |
 +------------+-------+--------+
+
 Fuente: Skokovic et al, 2014; Sobrino et al, 1996; Shaouhua Zhao et al, 2009.
 
 .. note:: **Ejercicio 6**
@@ -356,7 +455,7 @@ Recordad que el SW Algorithm que vamos a aplicar, es:
 
 LST = TB\ :sub:`10`\ + C\ :sub:`1`\ (TB\ :sub:`10`\-TB\ :sub:`11`\ ) + C\ :sub:`2`\ (TB\ :sub:`10`\ -TB\ :sub:`11`\ )2+ C\ :sub:`0`\ +(C\ :sub:`3`\ +C\ :sub:`4`\ W) (1-ε) + (C\ :sub:`5`\ +C\ :sub:`6`\ W) ∆ ε
 
-En este moment, ya únicamente nos faltan los parámetros correspondientes a:
+En este momento, ya únicamente nos faltan los parámetros correspondientes a:
 
 ∆ - valor medio LSE (Land Surface Emissivity) de las bandas del TIR = (LSE\ :sub:`10`\ + LSE\ :sub:`11`\) / 2
 
@@ -364,55 +463,173 @@ En este moment, ya únicamente nos faltan los parámetros correspondientes a:
 
 .. note:: **Ejercicio 7**
 
-   Utilizad la calculadora raster de GRASS para obtener los valores correspondientes a al **valor medio LSE** y a la **diferencia en LSE**.
+   Utilizad la calculadora ráster de GRASS para obtener los valores correspondientes a al **valor medio LSE** y a la **diferencia en LSE**.
+
+   El valor medio en contenido de agua puede obtenerse del sensor Modis: 
+   http://en.wikipedia.org/wiki/File:Atmospheric_Water_Vapor_Mean.2005.030.jpg
 
 
-ref_B10@PERMANENT+1.378*( ref_B10@PERMANENT - ref_B11@PERMANENT)+0.183*( ref_B10@PERMANENT - ref_B11@PERMANENT ) ^2-0.268+ (54.300-2.238*0.013 )*(1- LSE_valorMedio@PERMANENT)+(-129.20+16.40*0.013)* ( LSE_B10@PERMANENT - LSE_B11@PERMANENT     
-
-http://ladsweb.nascom.nasa.gov/data/search.html
+ref_B10+1.378*( ref_B10 - ref_B11)+0.183*( ref_B10 - ref_B11 ) ^2-0.268+ (54.300-2.238*0.013 )*(1- LSE_valorMedio)+(-129.20+16.40*0.013)* ( LSE_B10 - LSE_B11     
 
 
-Scripts de python y GRASS
+Obtener valores en ºC
+______________________
+
+Los valores de temperatura que habéis obtenido, están en grados Kelvin. 
+Para obtener los valores en ºC, recordad que **0 Kelvin = -273.15 Centígrados**
+
+
+
+
+Python y GRASS
 ===========================
 
 
-Variables de entorno
+Descargar código de los ejercicios
+____________________________________
 
-.. literalinclude:: workspace/ejercicios_grass/grass-env.sh
+Debéis de ejecutar el script 'obtener_datos_taller.sh' que tenéis en el escritorio.
+
+
+
+Pygrass Library (grass.script)
+______________________________
+
+Pygrass es una API orientada al objeto para trabajar con GRASS, que permite a los programadores trabajar con GRASS de una forma mas fácil y natural con un lenguaje de script.
+
+
+Abrir grass70
+::
+   
+   $ grass70
+
+
+En la consola de GRASS
+::
+   
+   help(grass)
+
+Nos muestra la ayuda y los módulos que dispone. El código de estos de encuentra en /usr/lib/grass70/etc/python/grass/script/
+
+
+Al ejecutar en la consola de GRASS, nos muestra la del módulo 'grass.utils'.
+::
+   
+   help(grass.utils)
+
+
+
+
+Al ejecutar en la consola de GRASS, nos muestra la del módulo 'grass.utils'. 
+::
+   
+   help(grass.utils)
+
+
+
+La consola nos permite escribir código y rutinas que ejecuten procesos y interactuar con la interfaz gráfica.
+
+
+En la consola de GRASS. Vemos como carga la capa LST en el árbol de capas.
+::
+   
+   AddLayer('LST')
+
+
+En la consola de GRASS. Obtenemos la lista de imágenes que tenemos.
+::
+   
+   grass.list_strings('raster')
+
+
+
+En la consola de GRASS. Obtenemos información acerca de la imagen 'LST'.
+::
+   
+   grass.raster.raster_info('LST')
+
+
+Mas información en:
+
+
+http://grass.osgeo.org/grass71/manuals/libpython/pygrass_index.html
+
+
+
+Además de la consola de python de GRASS también podemos trabajar con GRASS desde scripts de python.
+
+::
+   
+   python nuestro_script.py
+
+Y que este ejecute cógigo que llame a los módulos de GRASS.
+
+
+Variables de entorno
+_____________________
+
+Antes de empezar a programar con python y GRASS desde scripts hay que definir y inicializar las variables de entorno y variables de GRASS así nuestros scripts de python puedan funcionar de forma correcta.
+
+
+.. literalinclude:: ../workspace/ejercicios/grass-env.sh
+
+
+http://grass.osgeo.org/grass70/manuals/variables.html
+
+
+Ejecutar script que inicializa nuestras variables de entorno y de GRASS.
+::
+   
+   $ source grass-env.sh
+
+
+Ejemplo que muestra las variables de entorno de GRASS.
+
+.. literalinclude:: ../workspace/ejercicios/ejemplo_01_entorno.py
+
+
+Para ejecutar el script
+::
+   
+   $ python ejemplo_01_entorno.py
+
+
+Si os fijáis en el código, las variables de GRASS se almacenan en el archivo /home/user/.grassrc7
+
+
+::
+
+   GISDBASE: /home/user/Documentos/grassdata
+   LOCATION_NAME: catalunya
+   MAPSET: taller
+
+
+
+python
+_______
 
 
 En la consola
 
 ::
 
-   python
+   $ python
 
+Para importar la librería de GRASS
 ::
    
    import grass.script as grass
 
 
-Ejemplo que muestra las variables de entorno de GRASS
+Ejemplo que muestra los límites del location.
 
-.. literalinclude:: workspace/ejercicios_grass/ejemplo01_entorno.py
-
-
-Para ejecutar el script
-::
-   
-   python ejemplo01_entorno.py
-
-
-Ejemplo que muestra los límites de la región
-
-.. literalinclude:: workspace/ejercicios_grass/ejemplo02_location.py
+.. literalinclude:: ../workspace/ejercicios/ejemplo_02_location.py
 
 
 Para ejecutar el script
 ::
    
-   python ejemplo02_entorno.py
-
+   $ python ejemplo02_location.py
 
 
 
@@ -424,7 +641,7 @@ http://grass.osgeo.org/grass70/manuals/libpython/script_intro.html#syntax
 
 
 
-Consola de bash o windows
+Consola de bash o CMD de windows
 
 ::
    
@@ -473,4 +690,42 @@ Nos devuelve el resultado en un diccionario.
    {'ewres:      30': None, 'ellipsoid:  wgs84': None, 'nsres:      30': None, 'rows:       7911': None, 'north:      4741215': None, 'cells:      61555491': None, 'projection: 1 (UTM)': None, 'zone:       31': None, 'cols:       7781': None, 'west:       370485': None, 'datum:      wgs84': None, 'east:       603915': None, 'south:      4503885': None}
 
 
-**vwrite_command()**
+
+Ejercicios
+_____________________
+
+En la carpeta '/home/user/Documentos/taller_grass/workspace/ejercicios' tenéis los archivos que debéis de completar.
+
+- ejercicios_00.py
+- ejercicios_01.py
+- ejercicios_02.py
+- ejercicios_03.py
+- ejercicios_04.py
+- ejercicios_05.py
+- ejercicios_06.py
+- ejercicios_07.py
+- ejercicios_08.py
+
+Los ejercicios son los mismos que habéis realizado con la interfaz gráfica de GRASS pero con una imagen distinta. En el ejercicio 08 obtendremos datos estadísticos de la imagen 'LST' y 'LST2' y los cruzaremos con la capa de 'barrios' de Girona.
+
+Si todo funciona correctamente podemos ver los datos en un gráfico al ejecutar en la consola de bash.
+
+::
+
+   python ejercicios_limpiar.py 
+
+
+Ejemplo que os indica que debéis de implementar el código del ejercicio.
+::
+   
+   ##EJERCICIO## ##EJECUTAR_COMANDO## ##OBTENER TEMPERATURA DE BRILLO## ##PARÁMETROS##
+
+
+Antes de empezar debés de limpiar todo lo que habéis hecho menos la capa 'LST' para ello tenéis el archivo 'ejercicios_limpiar.py'
+
+En la consola de bash
+
+::
+
+   python ejercicios_limpiar.py 
+

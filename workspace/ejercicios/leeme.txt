@@ -1,1 +1,0 @@
-http://grasswiki.osgeo.org/wiki/GRASS_Python_Scripting_Library

@@ -1,6 +1,5 @@
 no
-_build
-blank.html
+ejercicios_hechos
 llegeix.txt
 vagrant
 .vagrant
@@ -12,3 +11,4 @@ _build
 .settings
 .pydevproject
 .ejercicios_*.py
+girona

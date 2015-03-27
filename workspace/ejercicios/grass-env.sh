@@ -1,13 +1,14 @@
-#!/usr/bin/env bash
+#!/bin/bash
 
 #http://grasswiki.osgeo.org/wiki/GRASS_and_Python
+#http://grass.osgeo.org/grass70/manuals/variables.html
 
 export GISBASE=/usr/lib/grass70
 export GRASS_VERSION="7.0.0"
 
 GISRC="$HOME/.grassrc7"
-export GISRC
 
+export GISRC
 export GRASS_PYTHON=python
 
 export PATH="$GISBASE/bin:$GISBASE/scripts:$PATH"
@@ -16,7 +17,7 @@ export GRASS_LD_LIBRARY_PATH="$LD_LIBRARY_PATH"
 export PYTHONPATH="$GISBASE/etc/python:$PYTHONPATH"
 
 
-#generate GISRCRC
+#Generamos el GISRCRC
 MYGISDBASE=$HOME/Documentos/grassdata
 MYLOC=catalunya
 MYMAPSET=taller
