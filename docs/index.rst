@@ -712,7 +712,7 @@ Si todo funciona correctamente podemos ver los datos en un gráfico al ejecutar 
 
 ::
 
-   python ejercicios_limpiar.py 
+   $ python ejercicios_limpiar.py 
 
 
 Ejemplo que os indica que debéis de implementar el código del ejercicio.
@@ -727,6 +727,6 @@ En la consola de bash
 
 ::
 
-   python ejercicios_limpiar.py 
+   $ python ejercicios_limpiar.py 
 
 
