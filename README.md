@@ -19,6 +19,7 @@ http://earthexplorer.usgs.gov/download/options/4923/LC81970312014253LGN00/
 Para descargar la imágenes debéis de escoger la opción 'Level 1 GeoTIFF Data Product (861.7 MB) (Login Required)'
 
 **Los ejercicios de python**
+
 Están en la carpeta workspace/ejercicios de este repositorio.
 
 **Muchas gracias a todos**
