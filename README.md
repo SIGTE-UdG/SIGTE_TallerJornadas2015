@@ -2,7 +2,7 @@
 
 **La presentación**
 
-http://goo.gl/OU1rBD
+http://sigte-tallerjornadas2015.readthedocs.org/es/latest/
 
 **Los datos**
 
